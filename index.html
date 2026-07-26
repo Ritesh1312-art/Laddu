@@ -22,6 +22,12 @@
             </button>
             
             <h1 id="game-title">For Janvika <span>Develop by Ritesh Gupta</span></h1>
+
+            <!-- Star Jar & Rewards Badge -->
+            <div id="header-star-jar" title="Janvika's Stars">
+                <span class="star-jar-icon">⭐</span>
+                <span id="star-count-num">0</span>
+            </div>
             
             <div id="controls">
                 <!-- Language Switcher -->
@@ -44,12 +50,21 @@
             <!-- Screen 1: Dashboard / Main Menu -->
             <section id="screen-dashboard" class="app-screen">
                 <div class="welcome-box">
-                    <h2>Janvika, क्या सीखें आज? 👶🎈</h2>
-                    <p>Select a fun world to learn and play!</p>
+                    <h2>Janvika, क्या खेलें आज? 👶🎈</h2>
+                    <p>Bolo, suno aur maze karo! Speak, listen and have fun!</p>
                 </div>
                 
                 <div class="menu-grid">
-                    <!-- ABC Card -->
+                    <!-- SPECIAL HIGHLIGHT: Dora-style Speech & Exercise Quest -->
+                    <div class="menu-card featured-card" id="card-dora-quest" data-target="screen-dora-quest">
+                        <div class="card-bg-glow" style="background: linear-gradient(135deg, #FF1744, #FF9100);"></div>
+                        <div class="card-icon">🗣️</div>
+                        <h3>बोलो & करो एडवेंचर<br><span>Dora-Style Bolo Quest</span></h3>
+                        <div class="guide-badge"><img src="assets/lion_3d.png" alt="Sheru Lion"></div>
+                        <div class="star-badge">🌟 Special</div>
+                    </div>
+
+                    <!-- 2. ABC Card -->
                     <div class="menu-card" id="card-abc" data-target="screen-abc">
                         <div class="card-bg-glow" style="background: #FF5722;"></div>
                         <div class="card-icon">🔤</div>
@@ -57,7 +72,7 @@
                         <div class="guide-badge"><img src="assets/lion_3d.png" alt="Lion"></div>
                     </div>
                     
-                    <!-- Hindi Akshar Card -->
+                    <!-- 3. Hindi Akshar Card -->
                     <div class="menu-card" id="card-hindi" data-target="screen-hindi">
                         <div class="card-bg-glow" style="background: #E91E63;"></div>
                         <div class="card-icon">🍎</div>
@@ -65,15 +80,39 @@
                         <div class="guide-badge"><img src="assets/cat_3d.png" alt="Cat"></div>
                     </div>
                     
-                    <!-- 123 Card -->
+                    <!-- 4. 123 Card -->
                     <div class="menu-card" id="card-numbers" data-target="screen-numbers">
                         <div class="card-bg-glow" style="background: #4CAF50;"></div>
                         <div class="card-icon">🔢</div>
                         <h3>1 2 3 गिनती<br><span>Number World</span></h3>
                         <div class="guide-badge"><img src="assets/elephant_3d.png" alt="Elephant"></div>
                     </div>
+
+                    <!-- 5. Ungli Se Likho (Tracing World) -->
+                    <div class="menu-card" id="card-tracing" data-target="screen-tracing">
+                        <div class="card-bg-glow" style="background: #00E676;"></div>
+                        <div class="card-icon">✏️</div>
+                        <h3>उंगली से लिखो<br><span>Finger Tracing</span></h3>
+                        <div class="guide-badge"><img src="assets/dog_3d.png" alt="Dog"></div>
+                    </div>
+
+                    <!-- 6. Phodo & Bolo (Balloon Pop) -->
+                    <div class="menu-card" id="card-balloon" data-target="screen-balloon">
+                        <div class="card-bg-glow" style="background: #00E5FF;"></div>
+                        <div class="card-icon">🎈</div>
+                        <h3>फोड़ो और बोलो<br><span>Balloon Speech Pop</span></h3>
+                        <div class="guide-badge"><img src="assets/squirrel_3d.png" alt="Squirrel"></div>
+                    </div>
+
+                    <!-- 7. Jodi Milaao (Match Game) -->
+                    <div class="menu-card" id="card-match" data-target="screen-match">
+                        <div class="card-bg-glow" style="background: #AA00FF;"></div>
+                        <div class="card-icon">🧩</div>
+                        <h3>जोड़ी मिलाओ<br><span>Match & Learn</span></h3>
+                        <div class="guide-badge"><img src="assets/cat_3d.png" alt="Cat"></div>
+                    </div>
                     
-                    <!-- Rhymes Card -->
+                    <!-- 8. Rhymes Card -->
                     <div class="menu-card" id="card-rhymes" data-target="screen-rhymes">
                         <div class="card-bg-glow" style="background: #2196F3;"></div>
                         <div class="card-icon">🎵</div>
@@ -81,7 +120,7 @@
                         <div class="guide-badge"><img src="assets/dog_3d.png" alt="Dog"></div>
                     </div>
 
-                    <!-- 5. Animal Care Adventure Card -->
+                    <!-- 9. Animal Care Adventure Card -->
                     <div class="menu-card" id="card-playground" data-target="screen-playground">
                         <div class="card-bg-glow" style="background: #FFEB3B;"></div>
                         <div class="card-icon">🐾</div>
@@ -370,6 +409,117 @@
                                 <!-- choices -->
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 7: SPECIAL DORA-STYLE BOLO & KARO ADVENTURE QUEST -->
+            <section id="screen-dora-quest" class="app-screen hidden">
+                <div class="dora-quest-header">
+                    <div class="dora-companion-box">
+                        <div class="companion-avatar bouncing">
+                            <img src="assets/lion_3d.png" id="companion-img" alt="Sheru Lion">
+                            <div class="sound-wave-ring" id="companion-ring"></div>
+                        </div>
+                        <div class="dora-speech-bubble" id="dora-dialogue">
+                            <span class="dora-guide-name">शेरू भैया 🦁:</span>
+                            <p id="dora-speech-text">Janvika! Suno, mere sath bolo! 🗣️✨</p>
+                        </div>
+                    </div>
+
+                    <!-- Mic Status & Voice Prompt Indicator -->
+                    <div class="mic-status-bar" id="mic-status-bar">
+                        <button id="btn-mic-toggle" class="mic-btn pulse-glow">
+                            <span id="mic-icon">🎙️</span> <span id="mic-label">सुन रहे हैं... (Suno & Bolo)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dora Quest Scenario Viewport -->
+                <div id="dora-scenario-viewport">
+                    <!-- Dynamic Scenario Title & Visual Scene -->
+                    <div class="scenario-stage" id="dora-stage">
+                        <div class="scene-emoji-hero" id="dora-hero-emoji">🦁🌳</div>
+                        <h2 id="dora-scene-title">जादुई जंगल का सफर! (Jungle Safari)</h2>
+                        <div class="scene-instruction-banner" id="dora-instruction">
+                            Janvika, aage jane ke liye bolo: <strong id="dora-target-word">"PANI"</strong>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Choice Cards (Touch Guarded) -->
+                    <div class="dora-choices-container" id="dora-choices">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <!-- Physical Movement Prompt Card (Clap / Jump / Hands Up) -->
+                    <div class="movement-prompt-card hidden" id="dora-movement-card">
+                        <div class="movement-icon-giant" id="movement-icon">👏</div>
+                        <h3 id="movement-text">Janvika, 3 baar Tali Bajao! (Clap 3 times!)</h3>
+                        <button class="chunky-btn green-btn" id="btn-movement-done">Janvika ne kar diya! 🎉</button>
+                    </div>
+                </div>
+
+                <!-- Touch Guard Warning Toast Modal -->
+                <div class="touch-guard-toast hidden" id="touch-guard-modal">
+                    <div class="toast-content bounce-in">
+                        <div class="toast-character">🦁✋</div>
+                        <h3>अरे जानविका! 🛑</h3>
+                        <p id="touch-guard-text">पहले अपने प्यारे मुंह से बोलो <strong id="guard-target-word">"APPLE"</strong>, फिर touch करो! 🗣️✨</p>
+                        <button class="chunky-btn yellow-btn" id="btn-touch-guard-dismiss">ठीक है शेरू भैया! 👍</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 8: FINGER TRACING WORLD (उंगली से लिखो) -->
+            <section id="screen-tracing" class="app-screen hidden">
+                <div class="screen-desc" style="display:flex; justify-content:space-between; align-items:center; width:100%; flex-wrap:wrap; gap:10px;">
+                    <h2 style="margin:0;">उंगली से लिखो! Trace with Finger! ✏️✨</h2>
+                    <div class="tracing-controls">
+                        <button class="chunky-btn red-btn" id="btn-clear-canvas">🔄 फिर से (Clear)</button>
+                        <button class="chunky-btn green-btn" id="btn-next-trace">➡️ अगला (Next)</button>
+                    </div>
+                </div>
+
+                <!-- Trace Item Selector Bar -->
+                <div class="tracing-selector-bar" id="tracing-selector">
+                    <!-- Populated dynamically (A-Z, 1-10, अ-ज्ञ) -->
+                </div>
+
+                <!-- Tracing Canvas Workspace -->
+                <div id="tracing-workspace">
+                    <div class="canvas-wrapper">
+                        <canvas id="tracing-canvas" width="360" height="360"></canvas>
+                        <div class="tracing-guide-char" id="tracing-bg-char">A</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 9: BALLOON & BUBBLE POP SPEECH GAME (फोड़ो और बोलो) -->
+            <section id="screen-balloon" class="app-screen hidden">
+                <div class="balloon-game-hud">
+                    <h2>🎈 गुब्बारे फोड़ो और बोलो! Balloon Pop Fun!</h2>
+                    <div class="balloon-score-box">Balloons Popped: <span id="balloon-pop-count">0</span> 🎈</div>
+                </div>
+
+                <!-- Floating Balloons Playground Container -->
+                <div id="balloon-playground">
+                    <!-- Floating balloons generated dynamically -->
+                </div>
+            </section>
+
+            <!-- Screen 10: DRAG & DROP MATCHING GAME (जोड़ी मिलाओ) -->
+            <section id="screen-match" class="app-screen hidden">
+                <div class="match-game-hud">
+                    <h2>🧩 सही जोड़ी मिलाओ! Match the Pairs!</h2>
+                    <p>Picture ko uske letter ya card se milaao!</p>
+                </div>
+
+                <div id="match-workspace">
+                    <div class="match-col" id="match-col-left">
+                        <!-- Left cards -->
+                    </div>
+                    <div class="match-col" id="match-col-right">
+                        <!-- Right target drop cards -->
                     </div>
                 </div>
             </section>

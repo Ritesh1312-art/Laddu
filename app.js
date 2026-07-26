@@ -2356,7 +2356,539 @@ const PLAYGROUND_ANIMAL_MAP = {
     snake: 'egg', lizard: 'bug', squirrel: 'acorn', rat: 'cheese', parrot: 'chili', monkey: 'banana'
 };
 
-// --- Window load init ---
+// ============================================================
+// JANVIKA STAR JAR & CONFETTI REWARD ENGINE
+// ============================================================
+let janvikaStars = parseInt(localStorage.getItem('janvika_stars') || '0');
+
+function updateStarDisplay() {
+    const starNumEl = document.getElementById('star-count-num');
+    if (starNumEl) {
+        starNumEl.textContent = janvikaStars;
+    }
+}
+
+function addJanvikaStars(amount = 1) {
+    janvikaStars += amount;
+    localStorage.setItem('janvika_stars', janvikaStars);
+    updateStarDisplay();
+    playSoundEffect('victory');
+    triggerConfetti();
+}
+
+// Lightweight Canvas Confetti Explosion
+function triggerConfetti() {
+    const canvas = document.createElement('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '999999';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    const colors = ['#FF1744', '#FF9100', '#FFD600', '#00E676', '#00E5FF', '#AA00FF', '#E040FB'];
+
+    for (let i = 0; i < 60; i++) {
+        particles.push({
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            vx: (Math.random() - 0.5) * 16,
+            vy: (Math.random() - 0.7) * 16,
+            size: Math.random() * 10 + 6,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            opacity: 1
+        });
+    }
+
+    let frame = 0;
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.4; // gravity
+            p.opacity -= 0.018;
+
+            if (p.opacity > 0) {
+                active = true;
+                ctx.save();
+                ctx.globalAlpha = p.opacity;
+                ctx.fillStyle = p.color;
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                ctx.restore();
+            }
+        });
+
+        if (active && frame < 90) {
+            frame++;
+            requestAnimationFrame(animate);
+        } else {
+            canvas.remove();
+        }
+    }
+    animate();
+}
+
+// ============================================================
+// DORA-STYLE BOLO & KARO ADVENTURE QUEST ENGINE
+// ============================================================
+const DORA_QUEST_SCENARIOS = [
+    {
+        titleHi: "जादुई जंगल का सफर! 🦁🌳",
+        titleEn: "Magical Jungle Safari! 🦁🌳",
+        emoji: "🦁🌳",
+        promptHi: "Janvika! Suno, Hum Jungle me hain! Aage ek Nadi hai. Bolo 'PANI' ya bolo 'JUMP'!",
+        promptEn: "Janvika! Listen, We are in the jungle! Say 'PANI' or say 'JUMP'!",
+        targetWord: "PANI",
+        choices: [
+            { word: "PANI", labelHi: "PANI (पानी)", labelEn: "PANI (Water)", emoji: "🌊", prompt: "Bolo - PANI!" },
+            { word: "JUMP", labelHi: "JUMP (कूदना)", labelEn: "JUMP (Hop)", emoji: "🦘", prompt: "Bolo - JUMP!" },
+            { word: "LION", labelHi: "LION (शेर)", labelEn: "LION (Sheru)", emoji: "🦁", prompt: "Bolo - LION!" }
+        ]
+    },
+    {
+        titleHi: "जादुई महल और खज़ाना! 🏰🔑",
+        titleEn: "Magical Castle & Treasure! 🏰🔑",
+        emoji: "🏰🔑",
+        promptHi: "Janvika! Khazane ka darwaza kholne ke liye bolo 'OPEN' ya bolo 'PAPA'!",
+        promptEn: "Janvika! To open the treasure door say 'OPEN' or say 'PAPA'!",
+        targetWord: "PAPA",
+        choices: [
+            { word: "PAPA", labelHi: "PAPA (पापा)", labelEn: "PAPA (Daddy)", emoji: "👨‍👧", prompt: "Bolo - PAPA!" },
+            { word: "OPEN", labelHi: "OPEN (खोलो)", labelEn: "OPEN (Door)", emoji: "🔑", prompt: "Bolo - OPEN!" },
+            { word: "MUMMA", labelHi: "MUMMA (मम्मा)", labelEn: "MUMMA (Mommy)", emoji: "👩‍👧", prompt: "Bolo - MUMMA!" }
+        ]
+    },
+    {
+        titleHi: "फल और आइसक्रीम लैंड! 🍎🍦",
+        titleEn: "Fruit & Ice Cream Land! 🍎🍦",
+        emoji: "🍎🍦",
+        promptHi: "Janvika! Yummy treats hain! Bolo 'APPLE' ya bolo 'MILK'!",
+        promptEn: "Janvika! Yummy treats! Say 'APPLE' or say 'MILK'!",
+        targetWord: "APPLE",
+        choices: [
+            { word: "APPLE", labelHi: "APPLE (सेब)", labelEn: "APPLE (Fruit)", emoji: "🍎", prompt: "Bolo - APPLE!" },
+            { word: "MILK", labelHi: "MILK (दूध)", labelEn: "MILK (Drink)", emoji: "🥛", prompt: "Bolo - MILK!" },
+            { word: "AAM", labelHi: "AAM (आम)", labelEn: "MANGO (Aam)", emoji: "🥭", prompt: "Bolo - AAM!" }
+        ]
+    },
+    {
+        titleHi: "तारे और स्पेस एडवेंचर! 🚀⭐",
+        titleEn: "Star & Space Adventure! 🚀⭐",
+        emoji: "🚀⭐",
+        promptHi: "Janvika! Aasmaan me taare hain! Bolo 'STAR' ya bolo 'DOGGY'!",
+        promptEn: "Janvika! Stars in the sky! Say 'STAR' or say 'DOGGY'!",
+        targetWord: "STAR",
+        choices: [
+            { word: "STAR", labelHi: "STAR (तारा)", labelEn: "STAR (Sky)", emoji: "⭐", prompt: "Bolo - STAR!" },
+            { word: "DOGGY", labelHi: "DOGGY (डौगी)", labelEn: "DOGGY (Pup)", emoji: "🐶", prompt: "Bolo - DOGGY!" },
+            { word: "MOON", labelHi: "MOON (चांद)", labelEn: "MOON (Chanda)", emoji: "🌙", prompt: "Bolo - MOON!" }
+        ]
+    }
+];
+
+let doraCurrentStep = 0;
+let doraSpokenGuardPassed = false;
+let speechRecognitionObj = null;
+
+function initializeDoraQuest() {
+    const choicesContainer = document.getElementById('dora-choices');
+    const dismissBtn = document.getElementById('btn-touch-guard-dismiss');
+    const movementDoneBtn = document.getElementById('btn-movement-done');
+    const micToggleBtn = document.getElementById('btn-mic-toggle');
+
+    if (dismissBtn) {
+        dismissBtn.addEventListener('click', () => {
+            playSoundEffect('pop');
+            document.getElementById('touch-guard-modal').classList.add('hidden');
+            doraSpokenGuardPassed = true;
+        });
+    }
+
+    if (movementDoneBtn) {
+        movementDoneBtn.addEventListener('click', () => {
+            addJanvikaStars(5);
+            speak("Wah Janvika! Bohot badhiya!", "Great job Janvika!");
+            document.getElementById('dora-movement-card').classList.add('hidden');
+            nextDoraQuestStep();
+        });
+    }
+
+    // Setup Web Speech Recognition API if supported
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        speechRecognitionObj = new SpeechRec();
+        speechRecognitionObj.continuous = true;
+        speechRecognitionObj.interimResults = true;
+        speechRecognitionObj.lang = 'hi-IN';
+
+        speechRecognitionObj.onresult = (event) => {
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal || event.results[i][0].confidence > 0.3) {
+                    const transcript = event.results[i][0].transcript.toLowerCase();
+                    console.log("Speech heard: ", transcript);
+                    // Child spoke something! Trigger celebration
+                    doraSpokenGuardPassed = true;
+                    addJanvikaStars(5);
+                    speak("Wah Janvika! Aapne bol diya! Shabash!", "Great speaking Janvika!");
+                    setTimeout(() => nextDoraQuestStep(), 1500);
+                    break;
+                }
+            }
+        };
+
+        if (micToggleBtn) {
+            micToggleBtn.addEventListener('click', () => {
+                playSoundEffect('pop');
+                try {
+                    speechRecognitionObj.start();
+                    document.getElementById('mic-label').textContent = "सुन रहे हैं... (Listening!)";
+                } catch(e) {
+                    console.log("Mic already listening or error: ", e);
+                }
+            });
+        }
+    }
+
+    loadDoraQuestScenario(0);
+}
+
+function loadDoraQuestScenario(index) {
+    doraCurrentStep = index % DORA_QUEST_SCENARIOS.length;
+    doraSpokenGuardPassed = false;
+
+    const scenario = DORA_QUEST_SCENARIOS[doraCurrentStep];
+    
+    // Update DOM
+    document.getElementById('dora-hero-emoji').textContent = scenario.emoji;
+    document.getElementById('dora-scene-title').textContent = currentLang === 'hi' ? scenario.titleHi : scenario.titleEn;
+    document.getElementById('dora-target-word').textContent = `"${scenario.targetWord}"`;
+    document.getElementById('dora-speech-text').textContent = currentLang === 'hi' ? scenario.promptHi : scenario.promptEn;
+
+    // Speak host prompt out loud
+    speak(scenario.promptHi, scenario.promptEn, 1.1, 0.85);
+
+    // Populate choices
+    const choicesContainer = document.getElementById('dora-choices');
+    choicesContainer.innerHTML = '';
+
+    scenario.choices.forEach(ch => {
+        const card = document.createElement('div');
+        card.className = 'dora-choice-card';
+        card.innerHTML = `
+            <div class="choice-emoji">${ch.emoji}</div>
+            <div class="choice-word-label">${currentLang === 'hi' ? ch.labelHi : ch.labelEn}</div>
+            <div class="choice-prompt-badge">🗣️ ${ch.prompt}</div>
+        `;
+
+        card.addEventListener('click', () => handleDoraChoiceClick(ch, scenario.targetWord));
+        choicesContainer.appendChild(card);
+    });
+}
+
+function handleDoraChoiceClick(choice, targetWord) {
+    // TOUCH GUARD: Check if child hasn't spoken or heard gentle reminder yet
+    if (!doraSpokenGuardPassed) {
+        playSoundEffect('boing');
+        
+        // Show Touch Guard Warning Modal
+        const modal = document.getElementById('touch-guard-modal');
+        document.getElementById('guard-target-word').textContent = `"${choice.word}"`;
+        modal.classList.remove('hidden');
+
+        // Host speaks playful gentle reminder out loud!
+        const reminderHi = `अरे जानविका! पहले अपने प्यारे मुंह से बोलो "${choice.word}", फिर touch करो!`;
+        const reminderEn = `Hey Janvika! First say "${choice.word}" out loud, then tap!`;
+        speak(reminderHi, reminderEn, 1.15, 0.85);
+
+        doraSpokenGuardPassed = true; // Next tap executes
+        return;
+    }
+
+    // Progression unlocked!
+    addJanvikaStars(5);
+    speak(`Wah Janvika! ${choice.word}! Shabash!`, `Great job Janvika! ${choice.word}!`);
+
+    // 50% chance to show a physical exercise prompt!
+    if (Math.random() > 0.5) {
+        showPhysicalExercisePrompt();
+    } else {
+        setTimeout(() => nextDoraQuestStep(), 1200);
+    }
+}
+
+function showPhysicalExercisePrompt() {
+    const card = document.getElementById('dora-movement-card');
+    const iconEl = document.getElementById('movement-icon');
+    const textEl = document.getElementById('movement-text');
+
+    const exercises = [
+        { icon: "👏", textHi: "Janvika, 3 baar Tali bajao! 👏", textEn: "Janvika, Clap 3 times! 👏" },
+        { icon: "🦘", textHi: "Janvika, Chalo JUMP karo! 🦘", textEn: "Janvika, Jump up high! 🦘" },
+        { icon: "🙌", textHi: "Janvika, Hands Up karo aur bolo 'HOORAY'! 🙌", textEn: "Janvika, Hands Up! 🙌" }
+    ];
+
+    const ex = exercises[Math.floor(Math.random() * exercises.length)];
+    iconEl.textContent = ex.icon;
+    textEl.textContent = currentLang === 'hi' ? ex.textHi : ex.textEn;
+
+    card.classList.remove('hidden');
+    speak(ex.textHi, ex.textEn, 1.1, 0.85);
+}
+
+function nextDoraQuestStep() {
+    loadDoraQuestScenario(doraCurrentStep + 1);
+}
+
+// ============================================================
+// FINGER TRACING WORLD ENGINE
+// ============================================================
+let tracingCanvas, tracingCtx;
+let isDrawing = false;
+let traceChars = ['A', 'B', 'C', 'D', '1', '2', '3', 'अ', 'आ', 'इ', 'क'];
+let currentTraceIndex = 0;
+
+function initializeTracingWorld() {
+    tracingCanvas = document.getElementById('tracing-canvas');
+    if (!tracingCanvas) return;
+    tracingCtx = tracingCanvas.getContext('2d');
+
+    const selectorBar = document.getElementById('tracing-selector');
+    const clearBtn = document.getElementById('btn-clear-canvas');
+    const nextBtn = document.getElementById('btn-next-trace');
+
+    // Populate selector bar
+    if (selectorBar) {
+        selectorBar.innerHTML = '';
+        traceChars.forEach((ch, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `trace-select-btn ${idx === 0 ? 'active' : ''}`;
+            btn.textContent = ch;
+            btn.addEventListener('click', () => {
+                playSoundEffect('pop');
+                document.querySelectorAll('.trace-select-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                setTraceChar(idx);
+            });
+            selectorBar.appendChild(btn);
+        });
+    }
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            playSoundEffect('pop');
+            clearTracingCanvas();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            addJanvikaStars(3);
+            setTraceChar((currentTraceIndex + 1) % traceChars.length);
+        });
+    }
+
+    // Pointer events for drawing
+    tracingCanvas.addEventListener('pointerdown', startTracing);
+    tracingCanvas.addEventListener('pointermove', drawTracing);
+    tracingCanvas.addEventListener('pointerup', stopTracing);
+    tracingCanvas.addEventListener('pointercancel', stopTracing);
+
+    setTraceChar(0);
+}
+
+function setTraceChar(index) {
+    currentTraceIndex = index;
+    const char = traceChars[currentTraceIndex];
+    document.getElementById('tracing-bg-char').textContent = char;
+    clearTracingCanvas();
+    speak(`Bolo - ${char}`, `Say - ${char}`);
+}
+
+function clearTracingCanvas() {
+    if (tracingCtx) {
+        tracingCtx.clearRect(0, 0, tracingCanvas.width, tracingCanvas.height);
+    }
+}
+
+function startTracing(e) {
+    isDrawing = true;
+    tracingCtx.beginPath();
+    const rect = tracingCanvas.getBoundingClientRect();
+    tracingCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+}
+
+function drawTracing(e) {
+    if (!isDrawing) return;
+    const rect = tracingCanvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    tracingCtx.lineWidth = 18;
+    tracingCtx.lineCap = 'round';
+    tracingCtx.lineJoin = 'round';
+    tracingCtx.strokeStyle = '#FF1744';
+    tracingCtx.shadowBlur = 10;
+    tracingCtx.shadowColor = '#FF9100';
+
+    tracingCtx.lineTo(x, y);
+    tracingCtx.stroke();
+
+    playSoundEffect('pop');
+}
+
+function stopTracing() {
+    if (isDrawing) {
+        isDrawing = false;
+        tracingCtx.closePath();
+    }
+}
+
+// ============================================================
+// BALLOON POP SPEECH GAME ENGINE
+// ============================================================
+let balloonPopCount = 0;
+let balloonInterval = null;
+
+function initializeBalloonPopWorld() {
+    const playground = document.getElementById('balloon-playground');
+    if (!playground) return;
+
+    // Clear previous balloons
+    playground.innerHTML = '';
+    balloonPopCount = 0;
+    document.getElementById('balloon-pop-count').textContent = '0';
+
+    speak("Balloons phodo aur bolo!", "Pop the balloons and speak!");
+
+    // Spawn 4 initial balloons
+    for (let i = 0; i < 4; i++) {
+        spawnBalloon();
+    }
+
+    if (balloonInterval) clearInterval(balloonInterval);
+    balloonInterval = setInterval(() => {
+        if (document.querySelectorAll('.floating-balloon').length < 6) {
+            spawnBalloon();
+        }
+    }, 2500);
+}
+
+function spawnBalloon() {
+    const playground = document.getElementById('balloon-playground');
+    if (!playground) return;
+
+    const balloon = document.createElement('div');
+    balloon.className = 'floating-balloon';
+
+    const colors = ['#FF1744', '#E91E63', '#9C27B0', '#2196F3', '#00BCD4', '#4CAF50', '#FFEB3B', '#FF9800'];
+    const items = ['A', 'B', 'C', '1', '2', '3', '🍎', '🐱', '🐶', '🦁', '⭐', '🎈'];
+    const item = items[Math.floor(Math.random() * items.length)];
+
+    balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+    balloon.style.left = Math.random() * 75 + '%';
+    balloon.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    balloon.textContent = item;
+
+    balloon.addEventListener('click', () => {
+        playSoundEffect('pop');
+        speak(`Bolo - ${item}`, `Pop - ${item}`);
+        addJanvikaStars(1);
+        
+        balloonPopCount++;
+        document.getElementById('balloon-pop-count').textContent = balloonPopCount;
+
+        balloon.remove();
+        spawnBalloon();
+    });
+
+    playground.appendChild(balloon);
+}
+
+// ============================================================
+// DRAG & MATCH GAME ENGINE
+// ============================================================
+const MATCH_PAIRS = [
+    { left: "🍎 Apple", right: "A", word: "A for Apple" },
+    { left: "🐘 Elephant", right: "E", word: "E for Elephant" },
+    { left: "🐱 Cat", right: "C", word: "C for Cat" },
+    { left: "🐶 Dog", right: "D", word: "D for Dog" }
+];
+
+let selectedLeftCard = null;
+
+function initializeMatchWorld() {
+    const leftCol = document.getElementById('match-col-left');
+    const rightCol = document.getElementById('match-col-right');
+
+    if (!leftCol || !rightCol) return;
+    leftCol.innerHTML = '';
+    rightCol.innerHTML = '';
+    selectedLeftCard = null;
+
+    speak("Sahi jodi milaao!", "Match the pairs!");
+
+    // Shuffle pairs
+    const shuffledPairs = [...MATCH_PAIRS].sort(() => Math.random() - 0.5);
+    const shuffledRights = [...MATCH_PAIRS].sort(() => Math.random() - 0.5);
+
+    shuffledPairs.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'match-card';
+        card.textContent = p.left;
+        card.dataset.match = p.right;
+
+        card.addEventListener('click', () => {
+            playSoundEffect('pop');
+            document.querySelectorAll('#match-col-left .match-card').forEach(c => c.style.borderColor = '#CE93D8');
+            card.style.borderColor = '#FF9800';
+            selectedLeftCard = p;
+        });
+
+        leftCol.appendChild(card);
+    });
+
+    shuffledRights.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'match-card';
+        card.textContent = p.right;
+
+        card.addEventListener('click', () => {
+            playSoundEffect('pop');
+            if (selectedLeftCard && selectedLeftCard.right === p.right) {
+                // Match success!
+                addJanvikaStars(5);
+                speak(`Wah! ${selectedLeftCard.word}!`, `Great! ${selectedLeftCard.word}!`);
+
+                document.querySelectorAll('#match-col-left .match-card').forEach(lc => {
+                    if (lc.dataset.match === p.right) {
+                        lc.classList.add('matched');
+                    }
+                });
+                card.classList.add('matched');
+                selectedLeftCard = null;
+            } else {
+                playSoundEffect('boing');
+                speak("Try again!", "Phir se koshish karo!");
+            }
+        });
+
+        rightCol.appendChild(card);
+    });
+}
+
+// ============================================================
+// WINDOW LOAD INITIALIZATION EXTENSION
+// ============================================================
 window.addEventListener('load', () => {
     setupGlobalControls();
     setupDashboard();
@@ -2365,6 +2897,14 @@ window.addEventListener('load', () => {
     initializeHindiWorld();
     initializeNumbersWorld();
     initializeInstrumentsWorld();
+
+    // New 10/10 Toddler Features Init
+    updateStarDisplay();
+    initializeDoraQuest();
+    initializeTracingWorld();
+    initializeBalloonPopWorld();
+    initializeMatchWorld();
     
     showScreen('screen-dashboard');
 });
+
