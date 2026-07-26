@@ -416,56 +416,55 @@
             <!-- Screen 7: SPECIAL DORA-STYLE BOLO & KARO ADVENTURE QUEST -->
             <section id="screen-dora-quest" class="app-screen hidden">
                 <div class="dora-quest-header">
-                    <div class="dora-companion-box">
-                        <div class="companion-avatar bouncing">
+                    <!-- Giant Interactive Sheru Lion Host -->
+                    <div class="dora-companion-box animated-host-box" id="btn-repeat-speech">
+                        <div class="companion-avatar bouncing speaking" id="companion-avatar-main">
                             <img src="assets/lion_3d.png" id="companion-img" alt="Sheru Lion">
-                            <div class="sound-wave-ring" id="companion-ring"></div>
+                            <div class="sound-wave-ring active-ring" id="companion-ring"></div>
                         </div>
                         <div class="dora-speech-bubble" id="dora-dialogue">
-                            <span class="dora-guide-name">शेरू भैया 🦁:</span>
-                            <p id="dora-speech-text">Janvika! Suno, mere sath bolo! 🗣️✨</p>
+                            <span class="dora-guide-name">शेरू भैया 🦁 (Tap to listen again!):</span>
+                            <p id="dora-speech-text" class="giant-audio-caption">Janvika! Suno aur Bolo! 🗣️✨</p>
                         </div>
                     </div>
 
-                    <!-- Mic Status & Voice Prompt Indicator -->
+                    <!-- Auto-listening Microphone Active Indicator Bar -->
                     <div class="mic-status-bar" id="mic-status-bar">
-                        <button id="btn-mic-toggle" class="mic-btn pulse-glow">
-                            <span id="mic-icon">🎙️</span> <span id="mic-label">सुन रहे हैं... (Suno & Bolo)</span>
-                        </button>
+                        <div class="mic-btn listening-pulse" id="mic-active-badge">
+                            <span id="mic-icon" class="mic-anim-icon">🎙️</span>
+                            <span id="mic-label">शेरू सुन रहा है... जानविका बोलो! (Sheru is listening!)</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Dora Quest Scenario Viewport -->
                 <div id="dora-scenario-viewport">
-                    <!-- Dynamic Scenario Title & Visual Scene -->
+                    <!-- Dynamic Bouncing Visual Hero Scene -->
                     <div class="scenario-stage" id="dora-stage">
-                        <div class="scene-emoji-hero" id="dora-hero-emoji">🦁🌳</div>
-                        <h2 id="dora-scene-title">जादुई जंगल का सफर! (Jungle Safari)</h2>
-                        <div class="scene-instruction-banner" id="dora-instruction">
-                            Janvika, aage jane ke liye bolo: <strong id="dora-target-word">"PANI"</strong>
-                        </div>
+                        <div class="scene-emoji-hero giant-animated-hero" id="dora-hero-emoji">🦁🌳</div>
+                        <h2 id="dora-scene-title" class="toddler-title">जादुई जंगल! (Jungle Safari)</h2>
                     </div>
 
-                    <!-- Interactive Choice Cards (Touch Guarded) -->
-                    <div class="dora-choices-container" id="dora-choices">
-                        <!-- Populated dynamically via JS -->
+                    <!-- Giant Visual Picture Cards (Zero Reading Required!) -->
+                    <div class="dora-choices-container giant-picture-grid" id="dora-choices">
+                        <!-- Populated dynamically via JS with giant 3D emojis/pictures -->
                     </div>
 
-                    <!-- Physical Movement Prompt Card (Clap / Jump / Hands Up) -->
+                    <!-- Physical Movement Animated Card (Clap / Jump / Hands Up) -->
                     <div class="movement-prompt-card hidden" id="dora-movement-card">
-                        <div class="movement-icon-giant" id="movement-icon">👏</div>
-                        <h3 id="movement-text">Janvika, 3 baar Tali Bajao! (Clap 3 times!)</h3>
-                        <button class="chunky-btn green-btn" id="btn-movement-done">Janvika ne kar diya! 🎉</button>
+                        <div class="movement-icon-giant animated-bounce-icon" id="movement-icon">👏</div>
+                        <h3 id="movement-text" class="giant-movement-text">Janvika, 3 baar Tali Bajao! 👏</h3>
+                        <button class="chunky-btn green-btn giant-chunky-btn" id="btn-movement-done">Janvika ne kar diya! 🎉</button>
                     </div>
                 </div>
 
-                <!-- Touch Guard Warning Toast Modal -->
+                <!-- Simple Voice Reminder Toast -->
                 <div class="touch-guard-toast hidden" id="touch-guard-modal">
                     <div class="toast-content bounce-in">
-                        <div class="toast-character">🦁✋</div>
-                        <h3>अरे जानविका! 🛑</h3>
-                        <p id="touch-guard-text">पहले अपने प्यारे मुंह से बोलो <strong id="guard-target-word">"APPLE"</strong>, फिर touch करो! 🗣️✨</p>
-                        <button class="chunky-btn yellow-btn" id="btn-touch-guard-dismiss">ठीक है शेरू भैया! 👍</button>
+                        <div class="toast-character animated-lion-talk">🦁🗣️</div>
+                        <h3 id="toast-title">जानविका, मुंह से बोलो! 🗣️</h3>
+                        <p id="touch-guard-text" class="giant-toast-speech">Bolo - "APPLE"! 🍎</p>
+                        <button class="chunky-btn yellow-btn giant-chunky-btn" id="btn-touch-guard-dismiss">Bolo aur Tap karo! 👍</button>
                     </div>
                 </div>
             </section>

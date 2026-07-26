@@ -2497,65 +2497,70 @@ const DORA_QUEST_SCENARIOS = [
 ];
 
 let doraCurrentStep = 0;
-let doraSpokenGuardPassed = false;
 let speechRecognitionObj = null;
+let doraSpeechTimer = null;
 
 function initializeDoraQuest() {
-    const choicesContainer = document.getElementById('dora-choices');
+    const repeatBtn = document.getElementById('btn-repeat-speech');
     const dismissBtn = document.getElementById('btn-touch-guard-dismiss');
     const movementDoneBtn = document.getElementById('btn-movement-done');
-    const micToggleBtn = document.getElementById('btn-mic-toggle');
+
+    // Tap Sheru Lion to listen to his voice again out loud!
+    if (repeatBtn) {
+        repeatBtn.addEventListener('click', () => {
+            playSoundEffect('pop');
+            const scenario = DORA_QUEST_SCENARIOS[doraCurrentStep];
+            speak(scenario.promptHi, scenario.promptEn, 1.15, 0.85);
+        });
+    }
 
     if (dismissBtn) {
         dismissBtn.addEventListener('click', () => {
             playSoundEffect('pop');
             document.getElementById('touch-guard-modal').classList.add('hidden');
-            doraSpokenGuardPassed = true;
         });
     }
 
     if (movementDoneBtn) {
         movementDoneBtn.addEventListener('click', () => {
             addJanvikaStars(5);
-            speak("Wah Janvika! Bohot badhiya!", "Great job Janvika!");
+            speak("Wah Janvika! Bohot badhiya! Tali bajayi!", "Great job Janvika!");
             document.getElementById('dora-movement-card').classList.add('hidden');
             nextDoraQuestStep();
         });
     }
 
-    // Setup Web Speech Recognition API if supported
+    // Auto-start Web Speech Recognition (Microphone Listener)
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-        speechRecognitionObj = new SpeechRec();
-        speechRecognitionObj.continuous = true;
-        speechRecognitionObj.interimResults = true;
-        speechRecognitionObj.lang = 'hi-IN';
+        try {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            speechRecognitionObj = new SpeechRec();
+            speechRecognitionObj.continuous = true;
+            speechRecognitionObj.interimResults = true;
+            speechRecognitionObj.lang = 'hi-IN';
 
-        speechRecognitionObj.onresult = (event) => {
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal || event.results[i][0].confidence > 0.3) {
-                    const transcript = event.results[i][0].transcript.toLowerCase();
-                    console.log("Speech heard: ", transcript);
-                    // Child spoke something! Trigger celebration
-                    doraSpokenGuardPassed = true;
-                    addJanvikaStars(5);
-                    speak("Wah Janvika! Aapne bol diya! Shabash!", "Great speaking Janvika!");
-                    setTimeout(() => nextDoraQuestStep(), 1500);
-                    break;
+            speechRecognitionObj.onresult = (event) => {
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    // ANY sound or word detected from Janvika!
+                    if (event.results[i][0].transcript.length > 0 || event.results[i].isFinal) {
+                        const wordHeard = event.results[i][0].transcript;
+                        console.log("Janvika spoke: ", wordHeard);
+                        
+                        addJanvikaStars(5);
+                        speak("WAH JANVIKA! Tumne bol diya! Shabash!", "Great speaking Janvika!");
+                        setTimeout(() => nextDoraQuestStep(), 1400);
+                        break;
+                    }
                 }
-            }
-        };
+            };
 
-        if (micToggleBtn) {
-            micToggleBtn.addEventListener('click', () => {
-                playSoundEffect('pop');
-                try {
-                    speechRecognitionObj.start();
-                    document.getElementById('mic-label').textContent = "सुन रहे हैं... (Listening!)";
-                } catch(e) {
-                    console.log("Mic already listening or error: ", e);
-                }
-            });
+            speechRecognitionObj.onerror = (e) => {
+                console.log("Speech Rec error/idle: ", e);
+            };
+
+            speechRecognitionObj.start();
+        } catch(err) {
+            console.log("Speech recognition auto-start notice: ", err);
         }
     }
 
@@ -2564,65 +2569,60 @@ function initializeDoraQuest() {
 
 function loadDoraQuestScenario(index) {
     doraCurrentStep = index % DORA_QUEST_SCENARIOS.length;
-    doraSpokenGuardPassed = false;
-
     const scenario = DORA_QUEST_SCENARIOS[doraCurrentStep];
     
-    // Update DOM
-    document.getElementById('dora-hero-emoji').textContent = scenario.emoji;
-    document.getElementById('dora-scene-title').textContent = currentLang === 'hi' ? scenario.titleHi : scenario.titleEn;
-    document.getElementById('dora-target-word').textContent = `"${scenario.targetWord}"`;
-    document.getElementById('dora-speech-text').textContent = currentLang === 'hi' ? scenario.promptHi : scenario.promptEn;
+    // Update DOM Visuals (Giant animated emojis, title, caption)
+    const heroEl = document.getElementById('dora-hero-emoji');
+    if (heroEl) heroEl.textContent = scenario.emoji;
+    
+    const titleEl = document.getElementById('dora-scene-title');
+    if (titleEl) titleEl.textContent = currentLang === 'hi' ? scenario.titleHi : scenario.titleEn;
 
-    // Speak host prompt out loud
-    speak(scenario.promptHi, scenario.promptEn, 1.1, 0.85);
+    const speechTextEl = document.getElementById('dora-speech-text');
+    if (speechTextEl) speechTextEl.textContent = currentLang === 'hi' ? scenario.promptHi : scenario.promptEn;
 
-    // Populate choices
-    const choicesContainer = document.getElementById('dora-choices');
-    choicesContainer.innerHTML = '';
+    // SPEAK HOST VOICE OUT LOUD IMMEDIATELY!
+    speak(scenario.promptHi, scenario.promptEn, 1.15, 0.85);
 
-    scenario.choices.forEach(ch => {
-        const card = document.createElement('div');
-        card.className = 'dora-choice-card';
-        card.innerHTML = `
-            <div class="choice-emoji">${ch.emoji}</div>
-            <div class="choice-word-label">${currentLang === 'hi' ? ch.labelHi : ch.labelEn}</div>
-            <div class="choice-prompt-badge">🗣️ ${ch.prompt}</div>
-        `;
-
-        card.addEventListener('click', () => handleDoraChoiceClick(ch, scenario.targetWord));
-        choicesContainer.appendChild(card);
-    });
-}
-
-function handleDoraChoiceClick(choice, targetWord) {
-    // TOUCH GUARD: Check if child hasn't spoken or heard gentle reminder yet
-    if (!doraSpokenGuardPassed) {
-        playSoundEffect('boing');
-        
-        // Show Touch Guard Warning Modal
-        const modal = document.getElementById('touch-guard-modal');
-        document.getElementById('guard-target-word').textContent = `"${choice.word}"`;
-        modal.classList.remove('hidden');
-
-        // Host speaks playful gentle reminder out loud!
-        const reminderHi = `अरे जानविका! पहले अपने प्यारे मुंह से बोलो "${choice.word}", फिर touch करो!`;
-        const reminderEn = `Hey Janvika! First say "${choice.word}" out loud, then tap!`;
-        speak(reminderHi, reminderEn, 1.15, 0.85);
-
-        doraSpokenGuardPassed = true; // Next tap executes
-        return;
+    // Auto-restart microphone listening for her voice
+    if (speechRecognitionObj) {
+        try { speechRecognitionObj.start(); } catch(e) {}
     }
 
-    // Progression unlocked!
-    addJanvikaStars(5);
-    speak(`Wah Janvika! ${choice.word}! Shabash!`, `Great job Janvika! ${choice.word}!`);
+    // Populate Giant Picture Cards (No reading needed for child!)
+    const choicesContainer = document.getElementById('dora-choices');
+    if (choicesContainer) {
+        choicesContainer.innerHTML = '';
 
-    // 50% chance to show a physical exercise prompt!
+        scenario.choices.forEach(ch => {
+            const card = document.createElement('div');
+            card.className = 'dora-choice-card giant-toddler-card';
+            card.innerHTML = `
+                <div class="choice-emoji giant-emoji-pic">${ch.emoji}</div>
+                <div class="choice-word-label giant-label-text">${ch.word}</div>
+            `;
+
+            card.addEventListener('click', () => handleDoraChoiceClick(ch));
+            choicesContainer.appendChild(card);
+        });
+    }
+}
+
+function handleDoraChoiceClick(choice) {
+    playSoundEffect('pop');
+    
+    // Speak out loud in friendly voice for toddler!
+    const speakTextHi = `Janvika ne bola ${choice.word}! Shabash!`;
+    const speakTextEn = `Janvika said ${choice.word}! Great!`;
+    speak(speakTextHi, speakTextEn, 1.15, 0.85);
+
+    addJanvikaStars(5);
+
+    // 50% chance to show a physical exercise prompt (Clap / Jump / Hands Up)!
     if (Math.random() > 0.5) {
         showPhysicalExercisePrompt();
     } else {
-        setTimeout(() => nextDoraQuestStep(), 1200);
+        setTimeout(() => nextDoraQuestStep(), 1500);
     }
 }
 

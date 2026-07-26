@@ -2730,3 +2730,71 @@ body {
     pointer-events: none;
 }
 
+/* ============================================================
+   GIANT ANIMATED TODDLER DORA QUEST STYLES
+   ============================================================ */
+.animated-host-box {
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animated-host-box:hover, .animated-host-box:active {
+    transform: scale(1.04);
+}
+
+.listening-pulse {
+    background: linear-gradient(135deg, #00E676, #00B0FF);
+    color: white;
+    font-weight: 900;
+    font-size: 18px;
+    padding: 12px 26px;
+    border-radius: 30px;
+    box-shadow: 0 8px 20px rgba(0, 230, 118, 0.4);
+    animation: listening-glow 1.5s infinite alternate;
+}
+
+@keyframes listening-glow {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.6); }
+    100% { transform: scale(1.04); box-shadow: 0 0 0 15px rgba(0, 230, 118, 0); }
+}
+
+.giant-animated-hero {
+    font-size: 90px !important;
+    animation: hero-bounce 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes hero-bounce {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-15px) scale(1.1); }
+}
+
+.giant-picture-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    gap: 20px !important;
+}
+
+.giant-toddler-card {
+    background: linear-gradient(135deg, #FFFFFF, #FFF9C4) !important;
+    border: 5px solid #FFC107 !important;
+    border-bottom: 10px solid #FFA000 !important;
+    border-radius: 36px !important;
+    padding: 24px 15px !important;
+}
+
+.giant-emoji-pic {
+    font-size: 72px !important;
+    animation: pulse-pic 2s infinite ease-in-out;
+}
+
+@keyframes pulse-pic {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+.giant-label-text {
+    font-size: 26px !important;
+    font-weight: 900 !important;
+    color: #E65100 !important;
+}
+
+
