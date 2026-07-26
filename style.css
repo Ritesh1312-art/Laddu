@@ -2795,10 +2795,201 @@ body {
     50% { transform: scale(1.12); }
 }
 
-.giant-label-text {
-    font-size: 26px !important;
-    font-weight: 900 !important;
-    color: #E65100 !important;
+/* ============================================================
+   PIXAR STUDIO 3D CINEMATIC THEME STYLES
+   ============================================================ */
+.pixar-studio-screen {
+    background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #31103F 100%) !important;
+    border-radius: 36px;
+    padding: 20px;
+    color: white;
+    box-shadow: inset 0 0 50px rgba(124, 77, 255, 0.2);
 }
+
+.pixar-title-bar {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.pixar-badge {
+    background: linear-gradient(135deg, #FFD600, #FF6D00);
+    color: #212121;
+    font-weight: 900;
+    font-size: 13px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(255, 109, 0, 0.4);
+    border: 2px solid white;
+}
+
+.pixar-movie-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #FFD54F;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    margin-top: 6px;
+}
+
+.pixar-companion-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    border-radius: 32px;
+    padding: 16px 24px;
+    border: 3px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    width: 100%;
+}
+
+.pixar-avatar-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6D00, #FFAB00);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #FFD600;
+    box-shadow: 0 0 25px rgba(255, 171, 0, 0.6);
+    flex-shrink: 0;
+}
+
+.pixar-avatar-container img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.pixar-audio-spectrum {
+    position: absolute;
+    bottom: -8px;
+    display: flex;
+    gap: 4px;
+}
+
+.pixar-audio-spectrum .bar {
+    width: 5px;
+    height: 16px;
+    background: #00E676;
+    border-radius: 4px;
+    animation: spectrum-anim 0.8s infinite alternate ease-in-out;
+}
+
+.pixar-audio-spectrum .bar:nth-child(2) { animation-delay: 0.15s; background: #00E5FF; }
+.pixar-audio-spectrum .bar:nth-child(3) { animation-delay: 0.3s; background: #FFD600; }
+.pixar-audio-spectrum .bar:nth-child(4) { animation-delay: 0.45s; background: #FF1744; }
+.pixar-audio-spectrum .bar:nth-child(5) { animation-delay: 0.6s; background: #E040FB; }
+
+@keyframes spectrum-anim {
+    0% { height: 6px; }
+    100% { height: 26px; }
+}
+
+.pixar-dialogue-bubble {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    padding: 14px 20px;
+    border: 3px solid #FFD600;
+    color: #1A237E;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.pixar-guide-name {
+    font-weight: 900;
+    font-size: 15px;
+    color: #D50000;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.pixar-speech-caption {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 0;
+    color: #0D47A1;
+}
+
+.pixar-mic-wave-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.mic-wave-pulse {
+    background: linear-gradient(135deg, #00E676, #00B0FF);
+    color: white;
+    font-weight: 900;
+    font-size: 17px;
+    padding: 10px 24px;
+    border-radius: 30px;
+    box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pixar-glass-viewport {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 36px;
+    padding: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.pixar-3d-hero {
+    font-size: 110px !important;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+    animation: pixar-hero-float 2s infinite alternate ease-in-out;
+}
+
+@keyframes pixar-hero-float {
+    0% { transform: translateY(0) scale(1) rotate(-3deg); }
+    100% { transform: translateY(-18px) scale(1.1) rotate(3deg); }
+}
+
+.pixar-scene-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #FFD54F;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    margin: 8px 0 0 0;
+}
+
+.pixar-choices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.pixar-3d-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,249,196,0.95)) !important;
+    border: 5px solid #FFD600 !important;
+    border-bottom: 10px solid #FF6D00 !important;
+    border-radius: 36px !important;
+    padding: 24px 15px !important;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pixar-3d-card:hover, .pixar-3d-card:active {
+    transform: translateY(-8px) scale(1.05);
+}
+
 
 

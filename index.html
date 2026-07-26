@@ -413,58 +413,55 @@
                 </div>
             </section>
 
-            <!-- Screen 7: SPECIAL DORA-STYLE BOLO & KARO ADVENTURE QUEST -->
-            <section id="screen-dora-quest" class="app-screen hidden">
-                <div class="dora-quest-header">
-                    <!-- Giant Interactive Sheru Lion Host -->
-                    <div class="dora-companion-box animated-host-box" id="btn-repeat-speech">
-                        <div class="companion-avatar bouncing speaking" id="companion-avatar-main">
-                            <img src="assets/lion_3d.png" id="companion-img" alt="Sheru Lion">
-                            <div class="sound-wave-ring active-ring" id="companion-ring"></div>
+            <!-- Screen 7: PIXAR-STYLE 100% HANDS-FREE BOLO & KARO ADVENTURE QUEST -->
+            <section id="screen-dora-quest" class="app-screen hidden pixar-studio-screen">
+                <!-- Pixar Studio Title Badge -->
+                <div class="pixar-title-bar">
+                    <span class="pixar-badge">🎬 PIXAR BOLO STUDIO</span>
+                    <h2 class="pixar-movie-title">جانوिका का जादुई सफर (Janvika's Adventure)</h2>
+                </div>
+
+                <div class="pixar-quest-header">
+                    <!-- Pixar 3D Animated Mascot Host -->
+                    <div class="pixar-companion-box" id="btn-repeat-speech">
+                        <div class="pixar-avatar-container bouncing" id="companion-avatar-main">
+                            <img src="assets/lion_3d.png" id="companion-img" alt="Pixar Sheru">
+                            <div class="pixar-audio-spectrum" id="audio-spectrum-bars">
+                                <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                            </div>
                         </div>
-                        <div class="dora-speech-bubble" id="dora-dialogue">
-                            <span class="dora-guide-name">शेरू भैया 🦁 (Tap to listen again!):</span>
-                            <p id="dora-speech-text" class="giant-audio-caption">Janvika! Suno aur Bolo! 🗣️✨</p>
+                        <div class="pixar-dialogue-bubble" id="dora-dialogue">
+                            <span class="pixar-guide-name">🦁 शेरू भैया (Pixar Guide):</span>
+                            <p id="dora-speech-text" class="pixar-speech-caption">Janvika! Suno aur Muh se Bolo! 🗣️✨</p>
                         </div>
                     </div>
 
-                    <!-- Auto-listening Microphone Active Indicator Bar -->
-                    <div class="mic-status-bar" id="mic-status-bar">
-                        <div class="mic-btn listening-pulse" id="mic-active-badge">
-                            <span id="mic-icon" class="mic-anim-icon">🎙️</span>
-                            <span id="mic-label">शेरू सुन रहा है... जानविका बोलो! (Sheru is listening!)</span>
+                    <!-- Hands-Free Mic Voice Waveform Indicator -->
+                    <div class="pixar-mic-wave-bar">
+                        <div class="mic-wave-pulse" id="mic-active-badge">
+                            <span class="mic-icon-pulse">🎙️</span>
+                            <span id="mic-label" class="mic-label-text">शेरू सुन रहा है... मुंह से बोलिए जानविका! (Hands-Free Speech Active)</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Dora Quest Scenario Viewport -->
-                <div id="dora-scenario-viewport">
-                    <!-- Dynamic Bouncing Visual Hero Scene -->
-                    <div class="scenario-stage" id="dora-stage">
-                        <div class="scene-emoji-hero giant-animated-hero" id="dora-hero-emoji">🦁🌳</div>
-                        <h2 id="dora-scene-title" class="toddler-title">जादुई जंगल! (Jungle Safari)</h2>
+                <!-- Pixar Scenario Cinematic Viewport -->
+                <div id="pixar-scenario-viewport" class="pixar-glass-viewport">
+                    <!-- Dynamic 3D Bouncing Hero Stage -->
+                    <div class="pixar-stage-hero" id="dora-stage">
+                        <div class="scene-emoji-hero pixar-3d-hero" id="dora-hero-emoji">🦁🌳</div>
+                        <h3 id="dora-scene-title" class="pixar-scene-title">जादुई जंगल! (Jungle Safari)</h3>
                     </div>
 
-                    <!-- Giant Visual Picture Cards (Zero Reading Required!) -->
-                    <div class="dora-choices-container giant-picture-grid" id="dora-choices">
-                        <!-- Populated dynamically via JS with giant 3D emojis/pictures -->
+                    <!-- Giant 3D Visual Cards (100% Hands-Free Display) -->
+                    <div class="pixar-choices-grid" id="dora-choices">
+                        <!-- Populated dynamically via JS with 3D Pixar Cards -->
                     </div>
 
-                    <!-- Physical Movement Animated Card (Clap / Jump / Hands Up) -->
-                    <div class="movement-prompt-card hidden" id="dora-movement-card">
-                        <div class="movement-icon-giant animated-bounce-icon" id="movement-icon">👏</div>
-                        <h3 id="movement-text" class="giant-movement-text">Janvika, 3 baar Tali Bajao! 👏</h3>
-                        <button class="chunky-btn green-btn giant-chunky-btn" id="btn-movement-done">Janvika ne kar diya! 🎉</button>
-                    </div>
-                </div>
-
-                <!-- Simple Voice Reminder Toast -->
-                <div class="touch-guard-toast hidden" id="touch-guard-modal">
-                    <div class="toast-content bounce-in">
-                        <div class="toast-character animated-lion-talk">🦁🗣️</div>
-                        <h3 id="toast-title">जानविका, मुंह से बोलो! 🗣️</h3>
-                        <p id="touch-guard-text" class="giant-toast-speech">Bolo - "APPLE"! 🍎</p>
-                        <button class="chunky-btn yellow-btn giant-chunky-btn" id="btn-touch-guard-dismiss">Bolo aur Tap karo! 👍</button>
+                    <!-- Animated Physical Exercise Card -->
+                    <div class="pixar-movement-card hidden" id="dora-movement-card">
+                        <div class="movement-icon-giant pixar-bounce-icon" id="movement-icon">👏</div>
+                        <h3 id="movement-text" class="pixar-movement-title">Janvika, 3 baar Tali Bajao! 👏</h3>
                     </div>
                 </div>
             </section>
