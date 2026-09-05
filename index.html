@@ -1,22 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5efe6">
-<meta name="description" content="Laddu — an animated, voice-led, interest-first foundational learning play world.">
-<title>Laddu • Play, Watch, Move, Learn</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Laddu Ka Khel Ghar 🏡 — Khelo • Suno • Seekho!</title>
+<meta name="description" content="Laddu ke liye game-based learning — NEP 2020, NCF aur 21st century skills ke hisaab se. Awaazon ke saath khelo, suno aur seekho!"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍬</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<div id="app">
-<header class="topbar glass">
-<button class="brand" id="homeBtn" aria-label="Home"><span class="brand-orb">🍬</span><span><b>Laddu</b><small>WATCH • PLAY • TALK • MOVE</small></span></button>
-<div class="top-actions"><button class="crystal-btn" id="langBtn">हिंदी / EN</button><button class="crystal-btn sound-btn" id="soundBtn">🔊 <span>Sound On</span></button><div class="stars">⭐ <b id="starCount">0</b></div></div>
+<header class="topbar">
+  <button class="btn btn-home" id="btnHome" title="Ghar">🏡</button>
+  <div class="brand" id="brand">
+    <span class="brand-big">Laddu Ka Khel Ghar</span>
+    <span class="brand-sub">🎈 Khelo • Suno • Seekho!</span>
+  </div>
+  <div class="top-actions">
+    <button class="btn btn-pill" id="btnStars" title="Taare aur stickers">⭐ <b id="starCount">0</b></button>
+    <button class="btn btn-pill" id="btnSound" title="Awaaz on/off">🔊</button>
+  </div>
 </header>
-<main id="main"></main><div id="toast" class="toast" role="status"></div>
-<footer><span>Joyful • Experiential • Child-centred</span><span>Voice + motion + play • Progress stays on this device</span></footer>
-</div><script src="app.js"></script>
-</body></html>
+<main id="screen" class="screen" aria-live="polite"></main>
+<div id="fx" class="fx-layer" aria-hidden="true"></div>
+<div id="overlay" class="overlay hidden"></div>
+<script src="js/audio.js"></script>
+<script src="js/speech.js"></script>
+<script src="js/confetti.js"></script>
+<script src="js/core.js"></script>
+<script src="js/stories-data.js"></script>
+<script src="js/stories.js"></script>
+<script src="js/games/prank.js"></script>
+<script src="js/games/vlog.js"></script>
+<script src="js/games/color.js"></script>
+<script src="js/games/mystery.js"></script>
+<script src="js/games/craft.js"></script>
+<script src="js/games/music.js"></script>
+<script src="js/games/dance.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
