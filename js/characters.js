@@ -1,7 +1,7 @@
 /* =========================================================
    Laddu Ka Khel Ghar — Characters & Animals System
    Hyper-realistic Characters (Laddu, Amma, Papa, Dadi, Chiku, Mittu, Dada)
-   + Darawna Bhootu + 8 New Animals (Lizard, Snake, Rat, Squirrel, Dog, Monkey, Parrot, Peacock)
+   + Darawna Bhootu + 10 Animals (Lizard, Snake, Rat, Squirrel, Dog, Monkey, Parrot, Peacock, Elephant, Lion)
    ========================================================= */
 (function () {
   const FAMILY = [
