@@ -35,8 +35,20 @@
       d.style.animationDelay = (i * 0.4) + 's';
       scene.append(d);
     });
-    const s1 = el('span', 'sc-e1', p.e1);
-    const s2 = el('span', 'sc-e2', p.e2);
+    const s1 = el('span', 'sc-e1');
+    const s2 = el('span', 'sc-e2');
+
+    /* Character photo rendering helper for story scenes */
+    function renderElem(target, eVal, charId) {
+      if (charId && window.Characters) {
+        target.innerHTML = window.Characters.getAvatarHTML(charId, 70, 'story-char-avatar');
+      } else {
+        target.textContent = eVal || '';
+      }
+    }
+
+    renderElem(s1, p.e1, p.char1);
+    renderElem(s2, p.e2, p.char2);
     scene.append(s1, s2);
     if (!cur.tapped[page]) {
       const star = el('span', 'story-star tap', '⭐');

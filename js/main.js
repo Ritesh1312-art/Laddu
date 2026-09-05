@@ -47,11 +47,15 @@
 
     const extra = el('div', 'extra-row');
     const got = Object.keys(State.data.stickers).length;
+    const f = el('button', 'btn card-mini', '👨‍👩‍👧‍👦 Mera Parivaar <span>Hyper-realistic Photos</span>');
+    f.onclick = () => { SFX.pop(); App.nav('family'); };
+    const an = el('button', 'btn card-mini', '🐾 Janwar Safari <span>8+ Animals & Boli</span>');
+    an.onclick = () => { SFX.pop(); App.nav('animals'); };
     const a = el('button', 'btn card-mini', '📚 Sticker Album <span>' + got + '/' + STICKERS.length + '</span>');
     a.onclick = () => { SFX.pop(); App.nav('album'); };
     const b = el('button', 'btn card-mini', '👩‍🏫 Papa-Ma Ke Liye <span>NEP 2020 • NCF • 21st Century</span>');
     b.onclick = () => { SFX.pop(); App.nav('parents'); };
-    extra.append(a, b);
+    extra.append(f, an, a, b);
     stage.append(extra);
   };
 

@@ -411,6 +411,56 @@ img{ max-width:100%; }
 .shake{ animation:shake .45s; }
 .pop-in{ animation:popIn .5s both; }
 
+/* ---------- Characters & Animals ---------- */
+.char-avatar-box{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:50%; overflow:hidden; border:3px solid #ff7043; background:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,.15); flex-shrink:0;
+}
+.char-avatar-box img{ width:100%; height:100%; object-fit:cover; display:block; }
+.char-emoji-fallback{ font-size:inherit; line-height:1; }
+
+.family-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px; margin-top:14px;
+}
+.family-card{
+  background:var(--card); border:3px solid var(--line); border-radius:24px;
+  padding:16px; display:flex; align-items:center; gap:16px; cursor:pointer;
+  box-shadow:0 6px 0 rgba(120,70,20,.12); transition:transform .1s, box-shadow .1s;
+}
+.family-card:hover{ transform:translateY(-3px); box-shadow:0 9px 0 rgba(120,70,20,.15); }
+.family-card:active{ transform:translateY(2px); box-shadow:0 3px 0 rgba(120,70,20,.12); }
+.family-card.jump{ animation:jump .6s; }
+.bhootu-card{ border-color:#7048e8; background:linear-gradient(135deg,#f3edff,#ffe3f7); }
+
+.f-info h3{ margin:0 0 2px; font-size:20px; color:#ff7043; }
+.f-role{ display:inline-block; font-size:13px; font-weight:800; color:#7048e8; background:rgba(112,72,232,.1); border-radius:999px; padding:2px 10px; margin-bottom:6px; }
+.f-info p{ margin:0; font-size:13.5px; color:var(--ink2); font-weight:600; line-height:1.35; }
+
+.animal-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px; margin-top:14px;
+}
+.animal-card{
+  background:var(--card); border:3px solid var(--line); border-radius:22px;
+  padding:14px; display:flex; align-items:center; gap:14px; cursor:pointer;
+  box-shadow:0 5px 0 rgba(120,70,20,.12); transition:transform .1s;
+}
+.animal-card:hover{ transform:translateY(-2px); }
+.animal-card.jump{ animation:jump .6s; }
+.a-info h3{ margin:0 0 2px; font-size:18px; color:#ff7043; }
+.a-info h3 small{ font-size:14px; color:var(--ink2); font-weight:600; }
+.a-sound{ display:inline-block; font-size:12.5px; font-weight:800; color:#2e7d3b; background:#eefbef; border-radius:999px; padding:2px 8px; margin-bottom:4px; }
+.a-info p{ margin:0; font-size:12.5px; color:var(--ink2); font-weight:600; }
+
+.bhootu-header-img{ display:flex; justify-content:center; margin-bottom:8px; }
+.bhootu-head-pic{ width:90px; height:90px; object-fit:contain; filter:drop-shadow(0 4px 8px rgba(112,72,232,.3)); animation:bounce 1.6s infinite; }
+.bhootu-caught-pic{ width:70px; height:70px; object-fit:contain; }
+.mini-animal-friend{ position:absolute; bottom:4px; right:4px; width:28px; height:28px; object-fit:contain; opacity:.85; border-radius:50%; }
+
+.story-char-avatar{ border-color:#ffd166; box-shadow:0 4px 12px rgba(0,0,0,.2); }
+
 @media (max-width:520px){
   .brand-big{ font-size:16px; }
   .home-hello h1{ font-size:28px; }
