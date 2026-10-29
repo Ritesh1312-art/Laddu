@@ -1,26 +1,34 @@
 /* =========================================================
-   Game 3 — Rang Pataka (Kids / Cartoon zone)
-   3 rounds: RANG, AAKAAR, GINTI — cartoon character ke
-   saath. Skill: colors, shapes, counting, listening.
+   Game 3 — रंग पटाखा V2 (कार्टून दुनिया)
+   V2 सुधार: सही शब्द (गोल, चौकोर, त्रिकोण — 'बराबर'/'पंझी'
+   हटाए), गुब्बारे खुद रंगीन (badge नहीं), गिनती असली
+   गिनकर (छूकर गिनो, फिर अंक चुनो), गिनती 10 तक बढ़ती हुई।
    ========================================================= */
 (function () {
   const COLORS = [
-    { name: 'laal',    hex: '#ff5d5d' },
-    { name: 'neela',   hex: '#4d96ff' },
-    { name: 'peela',   hex: '#ffd93d' },
-    { name: 'hara',    hex: '#6bcb77' },
-    { name: 'narangi', hex: '#ffa733' },
-    { name: 'baingani',hex: '#b980f0' }
+    { name: 'लाल', hex: '#ff5d5d' },
+    { name: 'नीला', hex: '#4d96ff' },
+    { name: 'पीला', hex: '#ffd93d' },
+    { name: 'हरा', hex: '#6bcb77' },
+    { name: 'नारंगी', hex: '#ffa733' },
+    { name: 'बैंगनी', hex: '#b980f0' },
+    { name: 'गुलाबी', hex: '#ff8fab' }
   ];
   const SHAPES = [
-    { name: 'chakra',   e: '⭕' },
-    { name: 'barabar',  e: '🟦' },
-    { name: 'sitara',   e: '⭐' },
-    { name: 'dil',      e: '❤️' },
-    { name: 'panjhi',   e: '🌸' },
-    { name: 'chandrma', e: '🌙' }
+    { name: 'गोल', e: '⭕' },
+    { name: 'चौकोर', e: '🟦' },
+    { name: 'त्रिकोण', e: '🔺' },
+    { name: 'सितारा', e: '⭐' },
+    { name: 'दिल', e: '❤️' },
+    { name: 'अंडाकार', e: '🥚' }
   ];
   const CHARACTERS = ['🦁', '🐰', '🐘', '🐤', '🦊', '🐼', '🐵', '🦄'];
+  const FRUITS = [
+    { e: '🍎', name: 'सेब' },
+    { e: '🍊', name: 'संतरे' },
+    { e: '🌸', name: 'फूल' },
+    { e: '🐦', name: 'चिड़ियाँ' }
+  ];
 
   function shuffled(arr) {
     const a = arr.slice();
@@ -33,41 +41,31 @@
 
   function buildRounds() {
     const rounds = [];
-    /* Act 1 — RANG (4) */
-    shuffled(COLORS).slice(0, 4).forEach(c => {
-      const opts = shuffled(COLORS).slice(0, 4);
-      if (!opts.includes(c)) opts[0] = c;
-      rounds.push({ act: 0, ask: 'Mujhe ' + c.name + ' gubbara chahiye!', say: 'Mujhe ' + c.name + ' gubbara chahiye!', target: c.name, opts: opts, type: 'balloon' });
+    shuffled(COLORS).slice(0, 3).forEach(c => {
+      const opts = shuffled(COLORS.filter(x => x.name !== c.name)).slice(0, 3);
+      opts.push(c);
+      rounds.push({ act: 0, ask: 'मुझे ' + c.name + ' गुब्बारा चाहिए!', target: c.name, opts: shuffled(opts), type: 'balloon' });
     });
-    /* Act 2 — AAKAAR (3) */
     shuffled(SHAPES).slice(0, 3).forEach(s => {
-      const opts = shuffled(SHAPES).slice(0, 4);
-      if (!opts.includes(s)) opts[0] = s;
-      rounds.push({ act: 1, ask: 'Mujhe ' + s.name + ' chahiye!', say: 'Mujhe ' + s.name + ' chahiye!', target: s.name, opts: opts, type: 'shape' });
+      const opts = shuffled(SHAPES.filter(x => x.name !== s.name)).slice(0, 3);
+      opts.push(s);
+      rounds.push({ act: 1, ask: 'मुझे ' + s.name + ' चाहिए!', target: s.name, opts: shuffled(opts), type: 'shape' });
     });
-    /* Act 3 — GINTI (3) */
-    const counts = [2, 3, 4];
-    const fruits = [
-      { e: '🍎', name: 'seeb' },
-      { e: '🐦', name: 'chidiya' },
-      { e: '🌸', name: 'phool' }
-    ];
-    shuffled(fruits).slice(0, 3).forEach(f => {
-      const n = counts[Math.floor(Math.random() * counts.length)];
-      const dummies = shuffled(fruits.filter(x => x.e !== f.e))[0];
-      rounds.push({ act: 2, ask: n + ' ' + f.name + ' dhundo!', say: n + ' ' + f.name + ' dhundo!', target: f.e, count: n, dummy: dummies.e, type: 'count' });
+    [3, 6, 10].forEach((n, k) => {
+      const f = FRUITS[k % FRUITS.length];
+      const dummy = FRUITS[(k + 1) % FRUITS.length];
+      rounds.push({ act: 2, ask: f.e + ' ' + f.name + ' गिनो!', target: f.e, count: n, dummy: dummy.e, type: 'count' });
     });
     return rounds;
   }
 
   App.games.color = {
     zone: 'cartoon',
-    name: 'Rang Pataka',
+    name: 'रंग पटाखा',
     emoji: '🌈',
     render(body) {
       const rounds = buildRounds();
-      let idx = 0;
-      let countGot = 0;
+      let idx = 0, mistakes = 0;
 
       body.innerHTML =
         '<div class="char-zone">' +
@@ -83,40 +81,35 @@
       const actEl = body.querySelector('#act');
       const charEl = body.querySelector('#char');
       const dotsEl = body.querySelector('#dots');
-      const ACT_NAMES = ['🎨 RANG', '🔷 AAKAAR', '🔢 GINTI'];
+      const ACT_NAMES = ['🎨 रंग', '🔷 आकार', '🔢 गिनती'];
 
       function drawDots() {
         dotsEl.innerHTML = '';
         rounds.forEach((r, i) => dotsEl.append(el('span', 'rdot' + (i < idx ? ' on' : ''))));
       }
-
-      function finish() {
-        App.win({
-          title: 'Rang Pataka khatam! 🌈',
-          sub: 'Rang, aakaar, ginti — teeno mein aap champion!',
-          sticker: 'color',
-          doneId: 'game-color',
-          stars: 3,
-          say: 'Waah! Aap ne rang, aakaar aur ginti teeno seekh liye!'
-        });
-      }
-
       function charJump() {
         charEl.classList.remove('jump');
         void charEl.offsetWidth;
         charEl.classList.add('jump');
       }
-
       function wrong(b) {
+        mistakes++;
         SFX.boing();
-        if (b) {
-          b.classList.add('shake');
-          setTimeout(() => b.classList.remove('shake'), 480);
-        }
+        if (b) { b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 480); }
         charEl.classList.add('shake');
         setTimeout(() => charEl.classList.remove('shake'), 480);
       }
-
+      function finish() {
+        const stars = mistakes <= 1 ? 3 : (mistakes <= 4 ? 2 : 1);
+        App.win({
+          title: 'रंग पटाखा ख़त्म! 🌈',
+          sub: mistakes <= 1 ? 'रंग, आकार, गिनती — तीनों में चैम्पियन!' : 'अच्छा खेले! ग़लतियाँ कम करो, 3 सितारे तुम्हारे!',
+          sticker: 'color',
+          doneId: 'game-color',
+          stars: stars,
+          say: 'वाह! आपने रंग, आकार और गिनती — तीनों सीख लिए!'
+        });
+      }
       function nextRound() {
         idx++;
         drawDots();
@@ -130,37 +123,29 @@
         bub.textContent = r.ask;
         actEl.textContent = ACT_NAMES[r.act];
         area.innerHTML = '';
-        countGot = 0;
 
         if (r.type === 'balloon') {
-          const W = area.clientWidth || 300;
           r.opts.forEach((c, i) => {
-            const b = el('div', 'balloon tap', '🎈');
-            b.style.left = (6 + i * (84 / Math.max(1, r.opts.length - 1 || 1))) + '%';
-            b.style.bottom = (18 + (i % 2) * 26) + 'px';
+            const b = el('div', 'balloon tap');
+            b.style.left = (3 + i * (80 / Math.max(1, r.opts.length - 1))) + '%';
+            b.style.bottom = (20 + (i % 2) * 30) + 'px';
             b.style.setProperty('--d', (i * 0.3) + 's');
-            /* balloon ko rang do */
-            b.style.filter = 'hue-rotate(0deg) drop-shadow(0 4px 3px rgba(0,0,0,.15))';
-            b.style.fontSize = '52px';
-            const span = document.createElement('span');
-            span.textContent = '🎈';
-            b.textContent = '';
-            b.append(span);
-            /* colored glow badge */
-            const badge = el('span', null, '');
-            badge.style.cssText = 'position:absolute;inset:26% 18%;border-radius:50%;background:' + c.hex + ';opacity:.85';
-            b.append(badge);
+            const bal = el('span', 'balloon-body');
+            bal.style.background = 'radial-gradient(circle at 32% 30%, rgba(255,255,255,.75), rgba(255,255,255,0) 42%), ' + c.hex;
+            b.append(bal);
+            b.append(el('span', 'balloon-string', ''));
             b.onclick = function (e) {
               if (c.name === r.target) {
                 SFX.popBig();
                 FX.burst(e.clientX, e.clientY, 20);
                 charJump();
-                Speech.say('Waah! ' + c.name + ' hi sahi tha!', { stop: false });
+                Speech.say('वाह! ' + c.name + ' ही सही था!', { stop: false });
                 nextRound();
               } else wrong(b);
             };
             area.append(b);
           });
+          Speech.say(r.ask);
         } else if (r.type === 'shape') {
           const row = el('div', 'tile-row');
           r.opts.forEach((s, i) => {
@@ -171,39 +156,64 @@
                 SFX.ding();
                 FX.burst(e.clientX, e.clientY, 16);
                 charJump();
-                Speech.say('Sahi pakda! ' + s.name + '!', { stop: false });
+                Speech.say('सही पकड़ा! ' + s.name + '!', { stop: false });
                 nextRound();
               } else wrong(t);
             };
             row.append(t);
           });
           area.append(row);
-        } else { /* count */
+          Speech.say(r.ask);
+        } else { /* count — पहले छूकर गिनो, फिर अंक चुनो */
+          let got = 0, phase = 'count';
           const need = r.count;
           const items = [];
           for (let i = 0; i < need; i++) items.push(r.target);
-          for (let i = 0; i < 5 - need; i++) items.push(r.dummy);
+          for (let i = 0; i < 4; i++) items.push(r.dummy);
           const grid = el('div', 'ginti-grid');
           shuffled(items).forEach(em => {
             const g = el('button', 'gitem tap', em);
             g.onclick = function (e) {
+              if (phase !== 'count') return;
               if (em === r.target && !g.classList.contains('got')) {
                 SFX.pop();
                 g.classList.add('got');
-                FX.burst(e.clientX, e.clientY, 10);
-                countGot++;
-                if (countGot >= need) {
-                  charJump();
-                  Speech.say('Waah! ' + need + ' mile! Ginti kamaal ki!', { stop: false });
-                  nextRound();
+                got++;
+                g.append(el('span', 'count-badge', '' + got));
+                FX.burst(e.clientX, e.clientY, 8);
+                Speech.say('' + got, { stop: false });
+                if (got >= need) {
+                  phase = 'pick';
+                  bub.textContent = 'कुल कितने हुए? अंक चुनो! 🔢';
+                  Speech.say('कुल कितने हुए? सही अंक चुनो!');
+                  showNumbers();
                 }
-              } else wrong(g);
+              } else if (em !== r.target) {
+                wrong(g);
+              }
             };
             grid.append(g);
           });
           area.append(grid);
+          const numRow = el('div', 'tile-row num-row');
+          area.append(numRow);
+          function showNumbers() {
+            const opts = shuffled([need, need + 1, Math.max(1, need - 1)]);
+            opts.forEach(n => {
+              const t = el('button', 'tile num-tile', '' + n);
+              t.onclick = function (e) {
+                if (n === need) {
+                  SFX.ding();
+                  charJump();
+                  Speech.say('वाह! ' + need + ' गिने! गिनती कमाल की!', { stop: false });
+                  nextRound();
+                } else wrong(t);
+              };
+              numRow.append(t);
+            });
+          }
+          Speech.say(r.ask + ' एक-एक करके छूकर गिनो!');
         }
-        Speech.say(r.say);
       }
 
       drawDots();

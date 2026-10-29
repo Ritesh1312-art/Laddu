@@ -1,14 +1,14 @@
 /* =========================================================
-   Laddu Ka Khel Ghar — Main: home, zones, album, parents
+   लड़्डू का खेल घर — Main V2: home, zones, album, parents
    ========================================================= */
 (function () {
   const ZONES = [
-    { id: 'comedy',  emoji: '😜', name: 'Comedy & Prank', sub: 'Hasi aur harkat', bg: 'linear-gradient(135deg,#ffd200,#ff7e5f)', tag: 'Dhyan • Observation' },
-    { id: 'family',  emoji: '🎥', name: 'Family & Vlog', sub: 'Parivaar ki yaadein', bg: 'linear-gradient(135deg,#a18cd1,#fbc2eb)', tag: 'Plan • Baat-cheet' },
-    { id: 'cartoon', emoji: '📺', name: 'Cartoon Duniya', sub: 'Rang, aakaar, ginti', bg: 'linear-gradient(135deg,#89f7fe,#66a6ff)', tag: 'Rang • Ginti' },
-    { id: 'mystery', emoji: '🕵️', name: 'Mystery & Rahasya', sub: 'Clues aur soch', bg: 'linear-gradient(135deg,#5f2c82,#49a09d)', tag: 'Logic • Soch' },
-    { id: 'craft',   emoji: '🎨', name: 'Chitkara & Kala', sub: 'Banao, rang do', bg: 'linear-gradient(135deg,#ff9a9e,#fecfef)', tag: 'Creativity • Hath' },
-    { id: 'music',   emoji: '🎵', name: 'Music & Dance', sub: 'Gaana aur naach', bg: 'linear-gradient(135deg,#f6d365,#fda085)', tag: 'Rhythm • Yaad' }
+    { id: 'comedy',  emoji: '😜', name: 'कॉमेडी और प्रैंक', sub: 'हँसी और हरकत', bg: 'linear-gradient(135deg,#f7b733,#fc4a1a)', tag: 'ध्यान • अवलोकन' },
+    { id: 'family',  emoji: '🎥', name: 'परिवार और व्लॉग', sub: 'परिवार की यादें', bg: 'linear-gradient(135deg,#8e44ad,#e84393)', tag: 'योजना • बातचीत' },
+    { id: 'cartoon', emoji: '📺', name: 'कार्टून दुनिया', sub: 'रंग, आकार, गिनती', bg: 'linear-gradient(135deg,#11998e,#38ef7d)', tag: 'रंग • गिनती' },
+    { id: 'mystery', emoji: '🕵️', name: 'रहस्य', sub: 'सुराग और सोच', bg: 'linear-gradient(135deg,#2c3e50,#4ca1af)', tag: 'तर्क • सोच' },
+    { id: 'craft',   emoji: '🎨', name: 'चित्रकारा और कला', sub: 'बनाओ, रंग दो', bg: 'linear-gradient(135deg,#ee5396,#f6d365)', tag: 'सृजन • हाथ' },
+    { id: 'music',   emoji: '🎵', name: 'संगीत और नृत्य', sub: 'गाना और नाच', bg: 'linear-gradient(135deg,#f7971e,#ffd200)', tag: 'ताल • याद' }
   ];
 
   function zoneDone(zid) {
@@ -17,15 +17,21 @@
     if (st) ids.push('story-' + st.id);
     return ids.length > 0 && ids.every(id => State.done(id));
   }
+  function zoneStars(zid) {
+    const ids = Object.keys(App.games).filter(g => App.games[g].zone === zid).map(g => 'game-' + g);
+    const st = STORIES.find(s => s.zone === zid);
+    if (st) ids.push('story-' + st.id);
+    return ids.reduce((a, id) => a + State.best(id), 0);
+  }
 
   /* ---------------- HOME ---------------- */
   App.screens.home = function (stage) {
     stage.innerHTML = '';
     const hello = el('div', 'home-hello pop-in');
     hello.innerHTML =
-      '<span class="hello-emoji">🌸</span>' +
-      '<h1>Namaste <span>Laddu</span>!</h1>' +
-      '<p>Aaj kya khelenge? Har game mein awaaz, hasi aur seekh! 🎈</p>';
+      '<div class="hello-photo">' + Characters.getAvatarHTML('laddu', 92, 'hello-avatar') + '</div>' +
+      '<h1>नमस्ते <span>लड़्डू</span>!</h1>' +
+      '<p>आज क्या खेलेंगे? हर खेल में आवाज़, हँसी और नई सीख! 🎈</p>';
     stage.append(hello);
 
     const grid = el('div', 'zone-grid');
@@ -39,7 +45,7 @@
         '<div class="z-name">' + z.name + '</div>' +
         '<div class="z-sub">' + z.sub + '</div>' +
         '<span class="z-skill">' + z.tag + '</span>' +
-        (zoneDone(z.id) ? '<span class="z-done">⭐</span>' : '');
+        (zoneDone(z.id) ? '<span class="z-done">⭐' + zoneStars(z.id) + '</span>' : '');
       c.onclick = () => { SFX.ding(); App.nav('zone', z.id); };
       grid.append(c);
     });
@@ -47,13 +53,13 @@
 
     const extra = el('div', 'extra-row');
     const got = Object.keys(State.data.stickers).length;
-    const f = el('button', 'btn card-mini', '👨‍👩‍👧‍👦 Mera Parivaar <span>Hyper-realistic Photos</span>');
+    const f = el('button', 'btn card-mini', '👨‍👩‍👧‍👦 मेरा परिवार <span>असली फोटो</span>');
     f.onclick = () => { SFX.pop(); App.nav('family'); };
-    const an = el('button', 'btn card-mini', '🐾 Janwar Safari <span>8+ Animals & Boli</span>');
+    const an = el('button', 'btn card-mini', '🐾 जानवर सफ़ारी <span>10 जानवर और बोलियाँ</span>');
     an.onclick = () => { SFX.pop(); App.nav('animals'); };
-    const a = el('button', 'btn card-mini', '📚 Sticker Album <span>' + got + '/' + STICKERS.length + '</span>');
+    const a = el('button', 'btn card-mini', '📚 स्टिकर एल्बम <span>' + got + '/' + STICKERS.length + '</span>');
     a.onclick = () => { SFX.pop(); App.nav('album'); };
-    const b = el('button', 'btn card-mini', '👩‍🏫 Papa-Ma Ke Liye <span>NEP 2020 • NCF • 21st Century</span>');
+    const b = el('button', 'btn card-mini', '👩‍🏫 माँ-पापा के लिए <span>NEP 2020 • NCF</span>');
     b.onclick = () => { SFX.pop(); App.nav('parents'); };
     extra.append(f, an, a, b);
     stage.append(extra);
@@ -67,7 +73,7 @@
     const games = Object.keys(App.games).filter(g => App.games[g].zone === zid);
 
     stage.innerHTML = '';
-    const back = el('button', 'btn btn-back', '← Ghar');
+    const back = el('button', 'btn btn-back', '← घर');
     back.onclick = () => { SFX.pop(); App.nav('home'); };
     stage.append(back);
 
@@ -83,16 +89,18 @@
     const list = el('div', 'zone-list');
     games.forEach(gid => {
       const g = App.games[gid];
+      const best = State.best('game-' + gid);
       const b = el('button', 'btn game-btn',
-        '<span class="gb-e">' + g.emoji + '</span><span>' + g.name + '<i>Khelo! 🎮</i></span>' +
-        (State.done('game-' + gid) ? '<span class="mini-star">⭐</span>' : ''));
+        '<span class="gb-e">' + g.emoji + '</span><span>' + g.name + '<i>खेलो! 🎮</i></span>' +
+        (best ? '<span class="mini-star">' + '⭐'.repeat(best) + '</span>' : ''));
       b.onclick = () => { SFX.ding(); App.nav('game', gid); };
       list.append(b);
     });
     if (story) {
+      const best = State.best('story-' + story.id);
       const b = el('button', 'btn game-btn story-btn',
-        '<span class="gb-e">' + story.emoji + '</span><span>' + story.title + '<i>Kahaani suno 📖 (awaaz mein)</i></span>' +
-        (State.done('story-' + story.id) ? '<span class="mini-star">⭐</span>' : ''));
+        '<span class="gb-e">' + story.emoji + '</span><span>' + story.title + '<i>कहानी सुनो 📖 (आवाज़ में)</i></span>' +
+        (best ? '<span class="mini-star">' + '⭐'.repeat(best) + '</span>' : ''));
       b.onclick = () => { SFX.ding(); App.nav('story', story.id); };
       list.append(b);
     }
@@ -105,7 +113,7 @@
     if (!g) { App.nav('home'); return; }
     SFX.stopBeat();
     stage.innerHTML = '';
-    const back = el('button', 'btn btn-back', '← Ghar');
+    const back = el('button', 'btn btn-back', '← पीछे');
     back.onclick = () => { SFX.pop(); App.nav('zone', g.zone); };
     const head = el('div', 'game-head');
     head.append(back, el('div', 'game-title', g.emoji + ' ' + g.name));
@@ -117,20 +125,20 @@
   /* ---------------- ALBUM ---------------- */
   App.screens.album = function (stage) {
     stage.innerHTML = '';
-    const back = el('button', 'btn btn-back', '← Ghar');
+    const back = el('button', 'btn btn-back', '← घर');
     back.onclick = () => { SFX.pop(); App.nav('home'); };
     stage.append(back);
-    stage.append(el('div', 'album-head', '📚 Meri Sticker Album'));
+    stage.append(el('div', 'album-head', '📚 मेरी स्टिकर एल्बम'));
     const got = Object.keys(State.data.stickers).length;
-    stage.append(el('div', 'hint', 'Games jeeto aur kahaaniyan karo — stickers yahan aayenge! (' + got + '/' + STICKERS.length + ' khul chuke)'));
+    stage.append(el('div', 'hint', 'खेल जीतो और कहानियाँ पूरी करो — स्टिकर यहाँ खुलेंगे! (' + got + '/' + STICKERS.length + ' खुल चुके)'));
     const grid = el('div', 'album-grid');
     STICKERS.forEach(s => {
       const have = !!State.data.stickers[s.id];
       const d = el('div', 'sticker' + (have ? '' : ' locked'));
       d.innerHTML =
         '<span class="st-emoji">' + (have ? s.emoji : '❓') + '</span>' +
-        '<span class="st-name">' + (have ? s.name : 'Chhupa Sticker') + '</span>' +
-        '<span class="st-skill">' + (have ? s.skill : s.zone + ' mein khelo!') + '</span>';
+        '<span class="st-name">' + (have ? s.name : 'छिपा स्टिकर') + '</span>' +
+        '<span class="st-skill">' + (have ? s.skill : s.zone + ' में खेलो!') + '</span>';
       d.onclick = () => {
         if (have) {
           SFX.jingle();
@@ -146,51 +154,50 @@
   /* ---------------- PARENTS CORNER ---------------- */
   App.screens.parents = function (stage) {
     stage.innerHTML = '';
-    const back = el('button', 'btn btn-back', '← Ghar');
+    const back = el('button', 'btn btn-back', '← घर');
     back.onclick = () => { SFX.pop(); App.nav('home'); };
     stage.append(back);
 
-    const head = el('div', 'album-head', '👩‍🏫 Papa-Ma Ke Liye');
-    stage.append(head);
-    stage.append(el('div', 'hint', 'Yeh app NEP 2020 (Foundational Stage 3–8), NCF aur 21st Century Skills ke hisaab se banayi gayi hai — poori tarah game-based, quiz nahi. Har cheez awaaz ke saath hai, taaki bachcha khelta-khelta seekhe.'));
+    stage.append(el('div', 'album-head', '👩‍🏫 माँ-पापा के लिए'));
+    stage.append(el('div', 'hint', 'यह app NEP 2020 (Foundational Stage 3–8), NCF और 21st Century Skills को ध्यान में रखकर बनी है — पूरी तरह खेल-आधारित, कोई quiz नहीं। हर गतिविधि में आवाज़-मार्गदर्शन है, और सितारे अब मुफ़्त नहीं मिलते — बच्चे के प्रदर्शन पर मिलते हैं, ताकि प्रगति सच में दिखे।'));
 
     const c1 = el('div', 'pcard');
     c1.innerHTML =
-      '<h3>🏫 NEP 2020 alignment</h3><ul>' +
-      '<li><b>Play-based, activity-based, experiential learning</b> — foundational stage (3–8) ke liye khel hi peethi hai.</li>' +
-      '<li><b>FLN (Foundational Literacy & Numeracy)</b> — rang/aakaar/ginti ka "Rang Pataka", kahaaniyan se bhasha.</li>' +
-      '<li><b>Assessment without exam</b> — stars aur stickers formative motivation hain, koi mark nahi.</li>' +
-      '<li><b>Multilingual</b> — pehle se Hindi, saath mein aasan English labels.</li>' +
-      '<li><b>Holistic + SEL</b> — kala, music, movement, empathy (prank wali kahaani mein "dard nahi, hasi").</li>' +
+      '<h3>🏫 NEP 2020 से जुड़ाव</h3><ul>' +
+      '<li><b>खेल-आधारित, गतिविधि-आधारित सीख</b> — foundational stage के लिए खेल ही आधार है।</li>' +
+      '<li><b>FLN (मूलभूत साक्षरता व संख्या-ज्ञान)</b> — रंग/आकार पहचान और छूकर गिनना (10 तक) "रंग पटाखा" में, कहानियों से भाषा।</li>' +
+      '<li><b>परीक्षा-रहित मूल्यांकन</b> — सितारे प्रदर्शन-आधारित (1–3) हैं; हर गतिविधि का सर्वश्रेष्ठ प्रयास याद रहता है।</li>' +
+      '<li><b>मातृभाषा-प्रथम</b> — सारे निर्देश और कहानियाँ देवनागरी हिंदी में, सही उच्चारण के साथ।</li>' +
+      '<li><b>समग्र + SEL</b> — कला, संगीत, गति और सहानुभूति (प्रैंक वाली कहानी में "दर्द नहीं, हँसी")।</li>' +
       '</ul>';
     const c2 = el('div', 'pcard');
     c2.innerHTML =
-      '<h3>📚 NCF alignment</h3><ul>' +
-      '<li><b>"Bachcha khushi se seekhta hai"</b> — har activity game hai, instructions awaaz mein aati hain.</li>' +
-      '<li><b>Gyan ka sandarbh</b> — ghar, parivaar, birthday, tyohaar, kahaniyan.</li>' +
-      '<li><b>Art + movement + music integration</b> — drawing, dance pads, piano melody.</li>' +
+      '<h3>📚 NCF से जुड़ाव</h3><ul>' +
+      '<li><b>"बच्चा खुशी से सीखता है"</b> — हर गतिविधि एक खेल है, निर्देश आवाज़ में मिलते हैं।</li>' +
+      '<li><b>जीवन से जुड़ा संदर्भ</b> — घर, परिवार, जन्मदिन, त्योहार, कहानियाँ।</li>' +
+      '<li><b>कला + गति + संगीत का समावेश</b> — drawing, dance pads, piano पर याद से बजाना।</li>' +
       '</ul>';
     const c3 = el('div', 'pcard');
     c3.innerHTML =
-      '<h3>🚀 21st Century Skills (4Cs + zyada)</h3>' +
+      '<h3>🚀 कौशल — खेल के हिसाब से</h3>' +
       '<table class="ptable">' +
-      '<tr><td>👻 Chupke Chupke</td><td>Critical thinking — observation, spatial search</td></tr>' +
-      '<tr><td>🎥 Vlog Studio</td><td>Communication + Collaboration — planning, sequencing</td></tr>' +
-      '<tr><td>🌈 Rang Pataka</td><td>Attention + cognitive flexibility — rang, aakaar, ginti</td></tr>' +
-      '<tr><td>🔍 Dadi Ki Chabi</td><td>Reasoning — clue se sochna, memory</td></tr>' +
-      '<tr><td>🖌️ Kala Bhanvartala</td><td>Creativity + fine motor skills</td></tr>' +
-      '<tr><td>🎵 Sitar Studio</td><td>Pattern memory, pitch, rhythm</td></tr>' +
-      '<tr><td>💃 Nacho Naacho</td><td>Memory, coordination, rhythm</td></tr>' +
-      '<tr><td>📖 Kahaani Wadi</td><td>Bhasha, empathy (SEL), sequencing</td></tr>' +
+      '<tr><td>👻 छुपके छुपके</td><td>अवलोकन + तर्क — गरम–ठंडा संकेतों से खोज</td></tr>' +
+      '<tr><td>🎥 व्लॉग स्टूडियो</td><td>योजना, क्रम, संवाद + प्रतिक्रिया-ध्यान (भूतू भगाना)</td></tr>' +
+      '<tr><td>🌈 रंग पटाखा</td><td>रंग/आकार पहचान, एक-एक गिनती, अंक-ज्ञान</td></tr>' +
+      '<tr><td>🔍 दादी की चाबी</td><td>तर्क — आधे इशारे से निष्कर्ष, कम खोज = बेहतर</td></tr>' +
+      '<tr><td>🖌️ कला भंवरताला</td><td>सृजन + सूक्ष्म मोटर कौशल</td></tr>' +
+      '<tr><td>🎵 सुर स्टूडियो</td><td>स्वर पहचान + क्रम-स्मृति (अभ्यास → बिना देखे बजाना)</td></tr>' +
+      '<tr><td>💃 नाचो नाचो</td><td>कार्यशील स्मृति, ताल, तालमेल (3→5→7 कदम)</td></tr>' +
+      '<tr><td>📖 कहानी वाड़ी</td><td>भाषा, क्रम-बोध, सहानुभूति (SEL)</td></tr>' +
       '</table>';
     const c4 = el('div', 'pcard');
     c4.innerHTML =
-      '<h3>🛡️ Safety & Suggestive Use</h3><ul>' +
-      '<li>No ads, no chat, no login — sirf khel.</li>' +
-      '<li>Koi audio file nahi — saari awaazein browser mein live banti hain; kahaaniyan Hindi voice (TTS) se padhi jaati hain.</li>' +
-      '<li>Progress phone/tablet mein hi save hota hai (localStorage).</li>' +
+      '<h3>🛡️ सुरक्षा व सुझाव</h3><ul>' +
+      '<li>कोई विज्ञापन नहीं, कोई chat नहीं, कोई login नहीं — सिर्फ़ खेल। परिवार की photos सिर्फ़ इस app के अंदर, डिवाइस पर ही रहती हैं।</li>' +
+      '<li>कोई audio file नहीं — सारी आवाज़ें browser में live बनती हैं; कहानियाँ Hindi voice (TTS) से पढ़ी जाती हैं।</li>' +
+      '<li>प्रगति phone/tablet में ही save होती है (localStorage)।</li>' +
       '</ul>' +
-      '<div class="parents-note">💡 Suggestive: ek baar mein 20–25 minute, phir outdoor khel. Kahaani khatam hone ke baad poora parivaar saath mein discuss kare — yehi NEP 2020 ka collaborative learning hai!</div>';
+      '<div class="parents-note">💡 सुझाव: एक बार में 20–25 मिनट, फिर बाहर का खेल। कहानी के बाद पूरे परिवार के साथ उस पर बात करें — यही सहयोगात्मक सीख है!</div>';
 
     stage.append(c1, c2, c3, c4);
   };

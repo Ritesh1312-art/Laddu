@@ -1,7 +1,7 @@
 /* =========================================================
-   Laddu Ka Khel Ghar — Story engine (Kahaani Wadi)
-   Page-wise kahaani, awaaz mein suno, star tap karo,
-   aur kahaani ke baad "Kahaani Khel" (order-memory game).
+   लड़्डू का खेल घर — Story engine V2 (कहानी वाड़ी)
+   V2 नियम: पन्नों पर छिपा सितारा-फ़ार्मिंग बंद। सितारे
+   सिर्फ़ कहानी पूरी करके "कहानी खेल" में प्रदर्शन पर।
    ========================================================= */
 (function () {
   let cur = null;
@@ -9,7 +9,7 @@
   App.screens.story = function (stage, id) {
     const st = STORIES.find(s => s.id === id);
     if (!st) { App.nav('home'); return; }
-    cur = { st: st, page: 0, tapped: {} };
+    cur = { st: st, page: 0 };
     render(stage);
   };
 
@@ -17,10 +17,10 @@
     const { st, page } = cur;
     const p = st.pages[page];
     const isLast = page === st.pages.length - 1;
-    const decoPos = [['8%','14%'], ['78%','20%'], ['16%','72%']];
+    const decoPos = [['8%', '14%'], ['78%', '20%'], ['16%', '72%']];
 
     stage.innerHTML = '';
-    const back = el('button', 'btn btn-back', '← Ghar');
+    const back = el('button', 'btn btn-back', '← घर');
     back.onclick = () => { SFX.pop(); App.nav('zone', st.zone); };
     const head = el('div', 'story-head');
     head.append(back, el('h2', null, st.emoji + ' ' + st.title));
@@ -38,10 +38,9 @@
     const s1 = el('span', 'sc-e1');
     const s2 = el('span', 'sc-e2');
 
-    /* Character photo rendering helper for story scenes */
     function renderElem(target, eVal, charId) {
       if (charId && window.Characters) {
-        target.innerHTML = window.Characters.getAvatarHTML(charId, 70, 'story-char-avatar');
+        target.innerHTML = window.Characters.getAvatarHTML(charId, 76, 'story-char-avatar');
       } else {
         target.textContent = eVal || '';
       }
@@ -50,39 +49,26 @@
     renderElem(s1, p.e1, p.char1);
     renderElem(s2, p.e2, p.char2);
     scene.append(s1, s2);
-    if (!cur.tapped[page]) {
-      const star = el('span', 'story-star tap', '⭐');
-      star.title = 'Star tap karo!';
-      star.onclick = function (e) {
-        cur.tapped[page] = true;
-        SFX.jingle();
-        FX.burst(e.clientX, e.clientY, 14);
-        State.addStars(1);
-        star.classList.add('got');
-        Speech.say('Waah! Ek star mila!', { stop: false });
-      };
-      scene.append(star);
-    }
     book.append(scene);
 
     const txt = el('div', 'page-text', p.text);
     book.append(txt);
 
     const ctl = el('div', 'page-ctl');
-    const prevB = el('button', 'btn', '← Pichhla');
+    const prevB = el('button', 'btn', '← पिछला');
     prevB.onclick = () => { if (page > 0) { cur.page--; SFX.pop(); render(stage); } };
     if (page === 0) prevB.disabled = true;
-    const listenB = el('button', 'btn btn-primary', '🔊 Suno');
+    const listenB = el('button', 'btn btn-primary', '🔊 सुनो');
     listenB.onclick = function () {
       SFX.pop();
-      Speech.say('Page ' + (page + 1) + '. ' + p.text);
+      Speech.say(p.text);
     };
     let nextB;
     if (isLast) {
-      nextB = el('button', 'btn btn-primary', '🎮 Kahaani Khel');
+      nextB = el('button', 'btn btn-primary', '🎮 कहानी खेल');
       nextB.onclick = () => { SFX.ding(); khet(stage); };
     } else {
-      nextB = el('button', 'btn btn-primary', 'Agla →');
+      nextB = el('button', 'btn btn-primary', 'अगला →');
       nextB.onclick = () => { cur.page++; SFX.pop(); render(stage); };
     }
     ctl.append(prevB, listenB, nextB);
@@ -96,29 +82,27 @@
     book.append(dots);
 
     stage.append(book);
-    const hint = el('div', 'hint', '🔊 "Suno" dabao toh kahaani awaaz mein sunai degi. Chhota ⭐ tap karo — bonus star!');
-    stage.append(hint);
+    stage.append(el('div', 'hint', '🔊 "सुनो" दबाओ — कहानी आवाज़ में सुनाई देगी। कहानी पूरी करके खेल खेलो और सितारे पाओ!'));
   }
 
-  /* ---- Kahaani Khel: story ka order yaad karke tap karo ---- */
+  /* ---- कहानी खेल: कहानी का क्रम याद करके छुओ ---- */
   function khet(stage) {
     const { st } = cur;
     const items = st.khet.items.slice();
-    // shuffle
     for (let i = items.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       const t = items[i]; items[i] = items[j]; items[j] = t;
     }
-    let nextIdx = 0;
+    let nextIdx = 0, mistakes = 0;
 
     stage.innerHTML = '';
     const head = el('div', 'story-head');
-    const back = el('button', 'btn btn-back', '← Kahaani');
+    const back = el('button', 'btn btn-back', '← कहानी');
     back.onclick = () => { SFX.pop(); cur.page = 0; render(stage); };
-    head.append(back, el('h2', null, '🎮 Kahaani Khel'));
+    head.append(back, el('h2', null, '🎮 कहानी खेल'));
     stage.append(head);
 
-    const say = el('div', 'g-tip', 'Kahaani ke hisaab se tap karo! 👆');
+    const say = el('div', 'g-tip', 'कहानी के हिसाब से क्रम में छुओ! 👆');
     stage.append(say);
 
     const chips = el('div', 'kchips');
@@ -128,7 +112,7 @@
     stage.append(chips);
 
     const grid = el('div', 'khet-grid');
-    items.forEach((it, i) => {
+    items.forEach((it) => {
       const c = el('button', 'kcard', '<span>' + it.e + '</span>' + it.l);
       c.onclick = function (e) {
         const orig = st.khet.items[nextIdx];
@@ -136,31 +120,34 @@
           SFX.ding();
           FX.burst(e.clientX, e.clientY, 12);
           c.classList.add('done');
+          c.disabled = true;
           nextIdx++;
           const chip = chips.children[nextIdx - 1];
           if (chip) chip.classList.add('on');
           const nextChip = chips.children[nextIdx];
           if (nextChip) nextChip.classList.add('on');
           if (nextIdx >= st.khet.items.length) {
+            const stars = mistakes === 0 ? 3 : (mistakes <= 2 ? 2 : 1);
             setTimeout(() => {
               if (!grid.isConnected) return;
               App.win({
-                title: 'Kahaani khatam! 📖',
+                title: 'कहानी पूरी हुई! 📖',
                 sub: st.khet.win,
                 sticker: st.id,
                 doneId: 'story-' + st.id,
-                stars: 3,
-                say: 'Shabaash Laddu! Aap ne kahaani poora khel liya! ' + st.khet.win
+                stars: stars,
+                say: 'शाबाश लड़्डू! आपने कहानी पूरी कर ली! ' + st.khet.win
               });
             }, 500);
           } else {
-            Speech.say('Sahi! Ab agla — ' + st.khet.items[nextIdx].l, { stop: false });
+            Speech.say('सही! अब अगला — ' + st.khet.items[nextIdx].l, { stop: false });
           }
         } else {
+          mistakes++;
           SFX.boing();
           c.classList.add('shake');
           setTimeout(() => c.classList.remove('shake'), 500);
-          Speech.say('Thoda socho... kahaani mein pehle kya hua tha?', { stop: false });
+          Speech.say('थोड़ा सोचो... कहानी में पहले क्या हुआ था?', { stop: false });
         }
       };
       grid.append(c);

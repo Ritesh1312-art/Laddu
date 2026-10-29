@@ -1,6 +1,8 @@
 /* =========================================================
-   Laddu Ka Khel Ghar — SFX + Music engine (Web Audio API)
-   Koi audio file nahi — saari awaazein live synthesize hoti hain.
+   लड़्डू का खेल घर — SFX + Music engine (Web Audio API)
+   कोई audio file नहीं — सारी आवाज़ें live बनती हैं।
+   V2 FIX: playMelody अब हर note को सही समय (t0 offset) पर
+   बजाती है — पहले सारे notes एक साथ बज जाते थे।
    ========================================================= */
 (function () {
   const AC = window.AudioContext || window.webkitAudioContext;
@@ -27,7 +29,7 @@
 
   function tone(o) {
     const c = ensure(); if (!c) return;
-    const t0 = o.t0 || 0, t = c.currentTime + t0;
+    const off = o.t0 || 0, t = c.currentTime + off;
     const osc = c.createOscillator();
     osc.type = o.type || 'sine';
     osc.frequency.setValueAtTime(o.freq, t);
@@ -57,9 +59,9 @@
   }
 
   const N = {
-    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
-    G4: 392.0, A4: 440.0, Bb4: 466.16, B4: 493.88,
-    C5: 523.25, D5: 587.33, E5: 659.25, A5: 880.0
+    C4: 261.63, 'C#4': 277.18, D4: 293.66, 'D#4': 311.13, E4: 329.63, F4: 349.23,
+    'F#4': 369.99, G4: 392.0, 'G#4': 415.3, A4: 440.0, 'A#4': 466.16, B4: 493.88,
+    C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880.0
   };
 
   const sfx = {
@@ -67,7 +69,6 @@
     unlock() { ensure(); },
     setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : 0.8; },
 
-    /* --- chhote click / tap awaazein --- */
     tap() { tone({ freq: 520, type: 'sine', dur: 0.06, vol: 0.22, glide: 220 }); },
     pop() { tone({ freq: 620, type: 'triangle', dur: 0.09, vol: 0.35, glide: 320 }); },
     popBig() {
@@ -79,7 +80,6 @@
     chord() { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone({ freq: f, type: 'triangle', t0: i * 0.05, dur: 0.75, vol: 0.28 })); },
     jingle() { [1046.5, 1318.5, 1567.98].forEach((f, i) => tone({ freq: f, type: 'triangle', t0: i * 0.07, dur: 0.18, vol: 0.28 })); },
 
-    /* --- funny / prank awaazein --- */
     boing() { tone({ freq: 160, type: 'sine', dur: 0.4, vol: 0.5, glide: 560 }); },
     honk() {
       tone({ freq: 220, type: 'square', dur: 0.22, vol: 0.16 });
@@ -88,52 +88,51 @@
     squeak() { tone({ freq: 900, type: 'square', dur: 0.15, vol: 0.15, glide: 700 }); },
     whoosh() { noise({ dur: 0.35, vol: 0.22, freq: 700 }); tone({ freq: 280, dur: 0.3, vol: 0.12, glide: 520 }); },
 
-    /* --- mystery awaazein --- */
     tick() { tone({ freq: 1200, type: 'square', dur: 0.04, vol: 0.14 }); },
     step() { noise({ dur: 0.09, vol: 0.16, freq: 320, type: 'lowpass' }); },
     whisper() { noise({ dur: 0.55, vol: 0.1, freq: 850, q: 5 }); },
     ching() { tone({ freq: 2093, type: 'sine', dur: 0.5, vol: 0.18 }); tone({ freq: 2637, t0: 0.03, dur: 0.4, vol: 0.1 }); },
+    warm() { tone({ freq: 740, type: 'sine', dur: 0.16, vol: 0.3, glide: 260 }); },
 
-    /* --- vlog / camera --- */
     shutter() { noise({ dur: 0.12, vol: 0.35, freq: 2600, type: 'highpass' }); tone({ freq: 900, type: 'square', dur: 0.05, vol: 0.14 }); },
     record() { tone({ freq: 660, type: 'square', dur: 0.14, vol: 0.18 }); },
     like() { tone({ freq: 987.77, dur: 0.12, vol: 0.3 }); tone({ freq: 1318.5, t0: 0.08, dur: 0.2, vol: 0.22 }); },
 
-    /* --- music / instruments --- */
-    key(freq, vol, dur) {
+    key(freq, vol, dur, t0) {
       vol = vol == null ? 0.4 : vol; dur = dur == null ? 0.5 : dur;
-      tone({ freq: freq, type: 'triangle', dur: dur, vol: vol });
-      tone({ freq: freq * 2, type: 'sine', dur: dur * 0.8, vol: vol * 0.25 });
+      tone({ freq: freq, type: 'triangle', dur: dur, vol: vol, t0: t0 || 0 });
+      tone({ freq: freq * 2, type: 'sine', dur: dur * 0.8, vol: vol * 0.25, t0: t0 || 0 });
     },
     drum() { tone({ freq: 120, type: 'sine', dur: 0.28, vol: 0.55, glide: -70 }); noise({ dur: 0.06, vol: 0.18, freq: 420, type: 'lowpass' }); },
     clap() { noise({ dur: 0.1, vol: 0.32, freq: 1800, q: 1.5 }); },
     bell() { tone({ freq: 1567.98, dur: 0.9, vol: 0.28 }); tone({ freq: 2093, t0: 0.02, dur: 0.7, vol: 0.12 }); },
     tambourine() { noise({ dur: 0.12, vol: 0.3, freq: 5000, type: 'highpass' }); tone({ freq: 3200, dur: 0.15, vol: 0.1 }); },
 
-    /* --- Happy Birthday (key of F) --- */
+    /* --- Happy Birthday (C major: सोल सोल ला सोल दो ति...) --- */
     BPM: 118,
     MELODY: [
-      ['C4', 0.5], ['C4', 0.5], ['D4', 1], ['C4', 1], ['F4', 1], ['E4', 2],
-      ['C4', 0.5], ['C4', 0.5], ['D4', 1], ['C4', 1], ['G4', 1], ['F4', 2],
-      ['C4', 0.5], ['C4', 0.5], ['C5', 1.5], ['A4', 0.5], ['F4', 1], ['E4', 1], ['D4', 3],
-      ['Bb4', 0.5], ['Bb4', 0.5], ['A4', 1.5], ['F4', 0.5], ['G4', 1], ['F4', 2]
+      ['G4', 0.5], ['G4', 0.5], ['A4', 1], ['G4', 1], ['C5', 1], ['B4', 2],
+      ['G4', 0.5], ['G4', 0.5], ['A4', 1], ['G4', 1], ['D5', 1], ['C5', 2],
+      ['G4', 0.5], ['G4', 0.5], ['G5', 1.5], ['E5', 0.5], ['C5', 1], ['B4', 1], ['A4', 3],
+      ['F5', 0.5], ['F5', 0.5], ['E5', 1.5], ['C5', 0.5], ['D5', 1], ['C5', 2]
     ],
+    /* V2 FIX: हर note अपने समय पर बजता है; onStep उसी पल चलता है। */
     playMelody(onStep, vol) {
       const c = ensure(); if (!c) return Promise.resolve();
       const step = 60 / this.BPM;
       return new Promise(res => {
-        let acc = 0.2;
+        let acc = 0.15;
         this.MELODY.forEach((n, i) => {
           const f = N[n[0]], d = n[1] * step;
-          this.key(f, vol == null ? 0.4 : vol, Math.min(0.62, d * 0.92));
-          setTimeout(() => { if (onStep) onStep(i, f); }, acc * 1000);
+          this.key(f, vol == null ? 0.4 : vol, Math.min(0.62, d * 0.92), acc);
+          const at = acc;
+          setTimeout(() => { if (onStep) onStep(i, f); }, at * 1000);
           acc += d;
         });
         setTimeout(res, acc * 1000 + 350);
       });
     },
 
-    /* --- simple beat loop (dance) --- */
     startBeat(onBeat) {
       this.stopBeat();
       ensure(); if (!ctx) return;

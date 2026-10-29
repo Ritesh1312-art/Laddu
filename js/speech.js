@@ -1,6 +1,7 @@
 /* =========================================================
-   Laddu Ka Khel Ghar — Hindi voice (Speech Synthesis)
-   Kahaaniyan aur instructions awaaz mein sunai dete hain.
+   लड़्डू का खेल घर — Hindi voice (Speech Synthesis)
+   सारा text देवनागरी में है, ताकि hi-IN voice का उच्चारण
+   सही आए (Roman text पर Hindi voice अटकती है)।
    ========================================================= */
 (function () {
   let voice = null;
@@ -19,17 +20,20 @@
   }
   const Speech = {
     say(text, opts) {
-      opts = opts || {};
-      if (!('speechSynthesis' in window)) return;
-      if (opts.stop !== false) speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'hi-IN';
-      if (voice) u.voice = voice;
-      u.rate = opts.rate || 0.95;
-      u.pitch = opts.pitch || 1.15;
-      u.volume = 1;
-      if (opts.onend) u.onend = opts.onend;
-      speechSynthesis.speak(u);
+      /* आवाज़ कभी खेल को नहीं रोकेगी — TTS में कोई भी गड़बड़ हो, खेल चलता रहेगा */
+      try {
+        opts = opts || {};
+        if (!('speechSynthesis' in window)) return;
+        if (opts.stop !== false) speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'hi-IN';
+        if (voice) u.voice = voice;
+        u.rate = opts.rate || 0.95;
+        u.pitch = opts.pitch || 1.1;
+        u.volume = 1;
+        if (opts.onend) u.onend = opts.onend;
+        speechSynthesis.speak(u);
+      } catch (e) { /* चुपचाप आगे बढ़ो */ }
     },
     stop() { if ('speechSynthesis' in window) speechSynthesis.cancel(); }
   };

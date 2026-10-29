@@ -1,139 +1,138 @@
 /* =========================================================
-   Laddu Ka Khel Ghar — Kahaani Wadi
-   6 kahaaniyan — Laddu ke 6 interest ke hisaab se.
-   Characters realistic hain: Laddu, Chiku (chhota bhai),
-   Amma, Papa, Dadi, aur ghar ka billi Mittu.
+   लड़्डू का खेल घर — कहानी वाड़ी V2
+   6 कहानियाँ, साफ़ और सही हिंदी में दोबारा लिखी हुईं।
+   (लड़्डू = लड़की, चीकू = छोटा भाई, मिट्टू = बिल्ली)
    ========================================================= */
 window.STORIES = [
   {
-    id: 's1', zone: 'comedy', title: 'Laddu Ka Hasi Prank', emoji: '😜',
+    id: 's1', zone: 'comedy', title: 'लड़्डू का हँसी प्रैंक', emoji: '😜',
     bg: 'linear-gradient(135deg,#fff1b8,#ffd9a0)',
     pages: [
-      { char1: 'laddu', char2: 'chiku', e1: '🛏️', e2: '💡', deco: ['✨', '🌙'], text: 'Laddu subah uthti hai. Uske dimaag mein ek chamakti si baat aati hai — aaj Chiku ko ek "hase hase" prank karna hai. Par yaad rahe — aisa prank jo kisi ko na dukhaye!' },
-      { char1: 'laddu', e1: '🎨', e2: '🍽️', deco: ['🖍️', '⭐'], text: 'Laddu ek safed plate par funny aankhein, chhoti naak aur "chanchal" mommakein kata karti hai. Ye hai uska jaadui "Hasi Plate"!' },
-      { char1: 'laddu', char2: 'chiku', e1: '🥄', e2: '🥞', deco: ['☕', '🌻'], text: 'Laddu Chiku ko jagati hai — "Bhaiya! Aaj ka nashta double special hai!" Chiku khushi-khushi rasoi mein aata hai. Uski aankhein chamak rahi hain.' },
-      { char1: 'chiku', char2: 'laddu', e1: '😲', e2: '🪞', deco: ['🎈', '😆'], text: 'Jaise hi Chiku baithta hai, Laddu plate uske saamne rakhti hai. "WOW!" — Chiku neeche dekhta hai, phir apni plate mein, aur hasi mein gir jaata hai!' },
-      { char1: 'papa', char2: 'dadi', e1: '😂', e2: '👨‍👩‍👧‍👦', deco: ['🎉', '💛'], text: 'Saari family hasne lagti hai. Papa ke glasses hilne lagte hain, Dadi ki chappal tak gir jaati hai. Ghar mein hansi ka toofan chhoon jaata hai!' },
-      { char1: 'chiku', char2: 'laddu', e1: '💛', e2: '🌟', deco: ['🤗', '⭐'], text: 'Raat ko Chiku kehta hai — "Laddu, tujhe pranks karna bahut aata hai, par asli jaadu hai aisi hasi, jismein koi na dukhe." Laddu ghoont leti hai — "Samjhi! Dosti mein hasi honi chahiye, dard nahi."' }
+      { char1: 'laddu', char2: 'chiku', e1: '🛏️', e2: '💡', deco: ['✨', '🌙'], text: 'सुबह-सुबह लड़्डू की आँख खुली। उसके दिमाग़ में एक मज़ेदार बात आई — आज चीकू के साथ एक हँसी वाला प्रैंक करेगी। लेकिन ऐसा प्रैंक, जिससे किसी को दुख न हो!' },
+      { char1: 'laddu', e1: '🎨', e2: '🍽️', deco: ['🖍️', '⭐'], text: 'लड़्डू ने एक सफ़ेद प्लेट ली। उस पर रंगों से बड़ी-बड़ी आँखें, छोटी-सी नाक और मज़ेदार मूँछें बना दीं। तैयार हो गई उसकी जादुई "हँसी प्लेट"!' },
+      { char1: 'laddu', char2: 'chiku', e1: '🥄', e2: '🥞', deco: ['☕', '🌻'], text: 'लड़्डू चीकू को जगाने गई — "भैया! आज का नाश्ता बहुत ख़ास है!" चीकू खुशी-खुशी रसोई में आया और कुर्सी पर बैठ गया।' },
+      { char1: 'chiku', char2: 'laddu', e1: '😲', e2: '🪞', deco: ['🎈', '😆'], text: 'लड़्डू ने प्लेट चीकू के सामने रख दी। प्लेट पर बना मज़ेदार चेहरा देखकर चीकू पहले चौंका, फिर हँसते-हँसते लोटपोट हो गया!' },
+      { char1: 'papa', char2: 'dadi', e1: '😂', e2: '👨‍👩‍👧‍👦', deco: ['🎉', '💛'], text: 'पूरी रसोई में हँसी गूँज उठी। पापा हँसते-हँसते बोले — "वाह लड़्डू!" दादी ने कहा — "ऐसी हँसी ही असली मज़ा है, जिसमें सब साथ हँसें।"' },
+      { char1: 'chiku', char2: 'laddu', e1: '💛', e2: '🌟', deco: ['🤗', '⭐'], text: 'रात को चीकू ने कहा — "लड़्डू, तुम्हारा प्रैंक बहुत मज़ेदार था!" लड़्डू मुस्कुराई — "क्योंकि असली जादू वही हँसी है, जिसमें कोई न दुखे।"' }
     ],
     khet: {
-      say: 'Kahaani ke hisaab se items ko tap karo — pehle kya hua, phir kya hua!',
-      win: 'Aap ne kahaani ka safar yaad kar liya!',
+      say: 'कहानी के हिसाब से क्रम में छुओ — पहले क्या हुआ, फिर क्या हुआ!',
+      win: 'आपने कहानी का पूरा सफ़र याद कर लिया!',
       items: [
-        { e: '💡', l: 'Plan' },
-        { e: '🎨', l: 'Hasi Plate' },
-        { e: '🥞', l: 'Nashta' },
-        { e: '😂', l: 'Hasi ka Toofan' }
+        { e: '💡', l: 'योजना बनी' },
+        { e: '🎨', l: 'हँसी प्लेट बनी' },
+        { e: '🥞', l: 'नाश्ता आया' },
+        { e: '😂', l: 'सब हँसे' }
       ]
     }
   },
   {
-    id: 's2', zone: 'family', title: 'Amma Ka Vlog', emoji: '🏠',
+    id: 's2', zone: 'family', title: 'अम्मा का व्लॉग', emoji: '🏠',
     bg: 'linear-gradient(135deg,#e3d5ff,#ffd9ec)',
     pages: [
-      { char1: 'amma', char2: 'laddu', e1: '📱', e2: '👩', deco: ['📸', '💡'], text: 'Amma apna phone uthati hai. "Aaj hum kuch naya karte hain — ek vlog! Par kaisa vlog? Ye aap sab decide karo." Saari family kaan khaati hai.' },
-      { char1: 'laddu', char2: 'papa', e1: '🧒', e2: '🎬', deco: ['⭐', '👏'], text: 'Laddu chhaunk uthati hai — "Vlog toh ghar ki story ka banayenge!" Papa bolte hain — "Toh hum saath mein vlog karenge!" Ab plan bana — hum sab saath.' },
-      { char1: 'dadi', char2: 'chiku', e1: '🍳', e2: '👵', deco: ['🫓', '🥛'], text: 'Pehla scene: rasoi! Dadi ke haath ke parathe, Chiku ka doodh ka gala, aur Laddu ki "action". Camera record karta hai — click! Click! Click!' },
-      { char1: 'papa', char2: 'dadi', e1: '🎤', e2: '👨', deco: ['🎩', '😄'], text: 'Doosra scene: chaupal! Papa funny topi pehente hain, Chiku gaana gaata hai — "Tune kya kiya?" — aur Dadi sabko hasa deti hain. Yehi toh family ka magic hai!' },
-      { char1: 'dadi', char2: 'amma', e1: '❤️', e2: '👵', deco: ['💛', '🌸'], text: 'Vlog taiyaar! Sabse pehle Dadi ko dikhaaya jaata hai. Dadi ke aankhon mein aansu aa jaate hain — "Ye video main sadiyon tak rakhungi." Pyaar ka vlog hai yeh.' },
-      { char1: 'laddu', char2: 'amma', e1: '🌟', e2: '📱', deco: ['✨', '💖'], text: 'Laddu ko samajh aata hai — vlog ka matlab hai pyaar baantna. Apne parivaar ki haseen yaadein, aise kaam jo hum roz karte hain, unhe apna banana. Ghar ki story, duniya ke saath.' }
+      { char1: 'amma', char2: 'laddu', e1: '📱', e2: '👩', deco: ['📸', '💡'], text: 'अम्मा ने फ़ोन उठाया और बोलीं — "आज हम कुछ नया करते हैं — एक व्लॉग बनाते हैं! सब मिलकर तय करो, व्लॉग में क्या होगा।" पूरा परिवार उत्साह से भर गया।' },
+      { char1: 'laddu', char2: 'papa', e1: '🧒', e2: '🎬', deco: ['⭐', '👏'], text: 'लड़्डू बोली — "व्लॉग हमारे घर की कहानी का बनेगा!" पापा बोले — "बहुत बढ़िया! हम सब साथ मिलकर बनाएँगे।" योजना तैयार हो गई।' },
+      { char1: 'dadi', char2: 'chiku', e1: '🍳', e2: '👵', deco: ['🫓', '🥛'], text: 'पहला दृश्य रसोई का बना। दादी के हाथ के गरम पराठे, चीकू का दूध का गिलास और लड़्डू की "एक्शन!" वाली आवाज़ — कैमरा सब कुछ रिकॉर्ड करता रहा।' },
+      { char1: 'papa', char2: 'dadi', e1: '🎤', e2: '👨', deco: ['🎩', '😄'], text: 'दूसरा दृश्य चौपाल का बना। पापा ने मज़ेदार टोपी पहनी, चीकू ने गाना गाया और दादी की बातों पर सब हँस पड़े। यही तो परिवार का जादू है!' },
+      { char1: 'dadi', char2: 'amma', e1: '❤️', e2: '👵', deco: ['💛', '🌸'], text: 'व्लॉग तैयार हुआ तो सबसे पहले दादी को दिखाया गया। दादी की आँखें भर आईं — "यह वीडियो मैं हमेशा अपने पास रखूँगी।" यह प्यार भरा व्लॉग था।' },
+      { char1: 'laddu', char2: 'amma', e1: '🌟', e2: '📱', deco: ['✨', '💖'], text: 'लड़्डू समझ गई — व्लॉग का मतलब है प्यार बाँटना। अपने परिवार की प्यारी यादों को सजाकर रखना ही असली ख़ुशी है।' }
     ],
     khet: {
-      say: 'Vlog banane ke steps kaunsa order theek hai? Tap karo!',
-      win: 'Vlog banana aap ne seekh liya!',
+      say: 'व्लॉग बनाने के काम किस क्रम में हुए? क्रम से छुओ!',
+      win: 'व्लॉग बनाना आपने सीख लिया!',
       items: [
-        { e: '📱', l: 'Phone uthao' },
-        { e: '🍳', l: 'Scene banao' },
-        { e: '🎤', l: 'Gaao-naacho' },
-        { e: '❤️', l: 'Pyaar baanto' }
+        { e: '📱', l: 'फ़ोन उठाया' },
+        { e: '💡', l: 'योजना बनी' },
+        { e: '🍳', l: 'दृश्य बनाए' },
+        { e: '❤️', l: 'प्यार बाँटा' }
       ]
     }
   },
   {
-    id: 's3', zone: 'cartoon', title: 'Laddu Ka Pehla Cartoon', emoji: '📺',
+    id: 's3', zone: 'cartoon', title: 'लड़्डू का पहला कार्टून', emoji: '📺',
     bg: 'linear-gradient(135deg,#c9f0ff,#d9e8ff)',
     pages: [
-      { char1: 'laddu', e1: '📺', e2: '🐦', deco: ['🌈', '⭐'], text: 'Sunday ki subah! Laddu apna favourite cartoon dekh rahi hai. Uska favourite character hai ek smart chidiya — "Mithoo". Mithoo hamesha naye ideas laata hai.' },
-      { char1: 'laddu', e1: '✏️', e2: '📄', deco: ['🖍️', '💡'], text: 'Cartoon khatam. Laddu ki aankhein chamak jaati hain — "Aur kyun nahi main bhi apna cartoon banau?" Woh kagaz aur rangin pencil uthati hai. Adventure shuru!' },
-      { char1: 'laddu', e1: '🎨', e2: '🐤', deco: ['🌟', '🖌️'], text: 'Laddu ek chidiya banati hai — laal par, neele patte, aur naam "Chikki". Chikki ki ek funny baat hai — "Main kabhi soya nahi hoon, main gungunata hoon!"' },
-      { char1: 'laddu', char2: 'chiku', e1: '🧦', e2: '🎭', deco: ['😆', '👏'], text: 'Ab action! Laddu purani chaddar se puppet banati hai, aur Chiku "Chikki" ki awaaz nikalta hai — "Krrrr! Ruk kyun raha? Mera show chalu hai!"' },
-      { char1: 'dadi', char2: 'chiku', e1: '👏', e2: '👨‍👩‍👧‍👦', deco: ['🎉', '🥳'], text: 'Raat ki "cartoon time"! Poora parivaar baitha hai. Laddu puppet najaatati hai, Chiku awaaz deta hai, Dadi taali bajati hai. Har 5 minute mein ek naya joke!' },
-      { char1: 'laddu', e1: '🌟', e2: '🦸', deco: ['✨', '🧠'], text: 'Laddu ko lagta hai — cartoon dekhna achha hai, par apna banana? Woh toh jadui cheez hai! Imagination — yehi asli superhero power hai.' }
+      { char1: 'laddu', e1: '📺', e2: '🐦', deco: ['🌈', '⭐'], text: 'रविवार की सुबह थी। लड़्डू अपना मनपसंद कार्टून देख रही थी। उसमें एक समझदार चिड़िया थी — मिट्ठू। मिट्ठू हर बार कोई नया और मज़ेदार उपाय सोचती थी।' },
+      { char1: 'laddu', e1: '✏️', e2: '📄', deco: ['🖍️', '💡'], text: 'कार्टून ख़त्म हुआ तो लड़्डू की आँखें चमक उठीं — "मैं भी अपना कार्टून बनाऊँगी!" उसने काग़ज़ और रंगीन पेंसिलें उठाईं। मज़ेदार सफ़र शुरू हो गया!' },
+      { char1: 'laddu', e1: '🎨', e2: '🐤', deco: ['🌟', '🖌️'], text: 'लड़्डू ने एक छोटी-सी चिड़िया बनाई — लाल पंख, नीली पूँछ और नाम रखा "चिक्की"। चिक्की की एक मज़ेदार आदत थी — वह हर बात गुनगुनाकर कहती थी!' },
+      { char1: 'laddu', char2: 'chiku', e1: '🧦', e2: '🎭', deco: ['😆', '👏'], text: 'अब बारी थी अभिनय की! लड़्डू ने पुरानी चादर से कठपुतली बनाई और चीकू चिक्की की आवाज़ निकालने लगा — "रुको रुको! मेरा शो शुरू होने वाला है!"' },
+      { char1: 'dadi', char2: 'chiku', e1: '👏', e2: '👨‍👩‍👧‍👦', deco: ['🎉', '🥳'], text: 'रात को "कार्टून समय" शुरू हुआ। पूरा परिवार बैठ गया। लड़्डू कठपुतली नचाती रही, चीकू आवाज़ देता रहा और दादी तालियाँ बजाती रहीं। हर थोड़ी देर में एक नया मज़ाक!' },
+      { char1: 'laddu', e1: '🌟', e2: '🦸', deco: ['✨', '🧠'], text: 'लड़्डू ने सोचा — कार्टून देखना अच्छा है, लेकिन अपना कार्टून बनाना तो जादू है! कल्पना ही असली महाशक्ति है।' }
     ],
     khet: {
-      say: 'Laddu ne apna cartoon kaise banaya? Sahi order mein tap karo!',
-      win: 'Aap bhi cartoon bana sakte ho!',
+      say: 'लड़्डू ने अपना कार्टून कैसे बनाया? सही क्रम में छुओ!',
+      win: 'आप भी कार्टून बना सकते हो!',
       items: [
-        { e: '📺', l: 'Cartoon dekho' },
-        { e: '✏️', l: 'Chikki banao' },
-        { e: '🎭', l: 'Puppet karo' },
-        { e: '👏', l: 'Show do' }
+        { e: '📺', l: 'कार्टून देखा' },
+        { e: '✏️', l: 'चिक्की बनाई' },
+        { e: '🎭', l: 'कठपुतली की' },
+        { e: '👏', l: 'शो दिया' }
       ]
     }
   },
   {
-    id: 's4', zone: 'mystery', title: 'Dadi Ki Chabi Kahan?', emoji: '🔍',
+    id: 's4', zone: 'mystery', title: 'दादी की चाबी कहाँ?', emoji: '🔍',
     bg: 'linear-gradient(135deg,#d7c4f7,#b3e3e0)',
     pages: [
-      { char1: 'dadi', char2: 'laddu', e1: '🗝️', e2: '👵', deco: ['😟', '🕯️'], text: 'Shaam hoti hai. Dadi bolte hain — "Mera laal keychain wali chabi nahi mil rahi! Bina chabi ke toh almara nahi khulega." Saari family ki naariyan neeche gir jaati hain.' },
-      { char1: 'laddu', char2: 'dadi', e1: '🧒', e2: '💡', deco: ['🔍', '⭐'], text: 'Laddu haath uthati hai — "Dadi, main dhundh lungi! Mujhe clues chahiye." Dadi muskurati hain — "Toh suno — pehla clue: kuch ching... ching... ching... ki awaaz aayi thi."' },
-      { char1: 'laddu', e1: '👂', e2: '🍳', deco: ['🥄', '❓'], text: 'Laddu kaan lagati hai... "ching... ching..." Awaaz rasoi se aarhi hai! Lekin wahan chabi nahi — sirf ghadi thi. "Ye ek chalaaki thi! Chabi ke paas chhota kanka lagta hai — awaaz chabi ki hai!"' },
-      { char1: 'mittu', char2: 'laddu', e1: '🐱', e2: '📦', deco: ['🐾', '❗'], text: 'Dusra clue! Ghar ka billi Mittu ek chhote se box ko peeth raha hai. Mittu kabhi naa-kuch peethta nahi... ye box kahan se aaya? Mittu ki naak utha kar dekhta hai.' },
-      { char1: 'laddu', char2: 'mittu', e1: '📦', e2: '🗝️', deco: ['✨', '🎉'], text: 'Laddu box uthati hai... andar hai Dadi ki laal chabi! Mittu ne chabi leke bhaag chuka tha! "Mittu, tu toh asli detective hai!" Mittu — mrreeeuuuw.' },
-      { char1: 'dadi', char2: 'laddu', e1: '💛', e2: '🌟', deco: ['🤗', '⭐'], text: 'Dadi Laddu ko ghoont leti hain — "Meri beta, chabi toh mili, par aaj ek aur cheez mili — ek smart beti!" Laddu ko samajh aata hai — dhyan se dekhne se har rahasya toot jaata hai. Aur kabhi-kabhi clues... billi ke paas chubhe rehte hain!' }
+      { char1: 'dadi', char2: 'laddu', e1: '🗝️', e2: '👵', deco: ['😟', '🕯️'], text: 'शाम का समय था। दादी बोलीं — "मेरी लाल डोरी वाली चाबी नहीं मिल रही! बिना चाबी के अलमारी नहीं खुलेगी।" सब चिंता में पड़ गए।' },
+      { char1: 'laddu', char2: 'dadi', e1: '🧒', e2: '💡', deco: ['🔍', '⭐'], text: 'लड़्डू ने हाथ उठाया — "दादी, मैं चाबी ढूँढूँगी! मुझे सुराग चाहिए।" दादी मुस्कुराईं — "सुनो, पहला सुराग — कहीं से छिन... छिन... की आवाज़ आई थी।"' },
+      { char1: 'laddu', e1: '👂', e2: '🍳', deco: ['🥄', '❓'], text: 'लड़्डू ने कान लगाए... छिन... छिन... आवाज़ रसोई से आई! लेकिन वहाँ चाबी नहीं थी, सिर्फ़ दीवार घड़ी थी। लड़्डू बोली — "यह आवाज़ हमें भटका रही है। असली सुराग कुछ और है!"' },
+      { char1: 'mittu', char2: 'laddu', e1: '🐱', e2: '📦', deco: ['🐾', '❗'], text: 'तभी दूसरा सुराग मिला! मिट्टू बिल्ली एक छोटे-से डिब्बे को पंजे से धकेल रही थी। मिट्टू बेवजह कुछ नहीं करती... यह डिब्बा यहाँ आया कहाँ से?' },
+      { char1: 'laddu', char2: 'mittu', e1: '📦', e2: '🗝️', deco: ['✨', '🎉'], text: 'लड़्डू ने डिब्बा उठाया... अंदर दादी की लाल डोरी वाली चाबी थी! खेलते-खेलते मिट्टू चाबी को डिब्बे तक ले गई थी। लड़्डू हँसी — "मिट्टू, तुम तो असली जासूस निकली!"' },
+      { char1: 'dadi', char2: 'laddu', e1: '💛', e2: '🌟', deco: ['🤗', '⭐'], text: 'दादी ने लड़्डू को गले लगाया — "मेरी बेटी, चाबी तो मिली ही, आज एक होशियार जासूस भी मिल गई!" लड़्डू समझ गई — ध्यान से देखने से हर रहस्य सुलझ जाता है।' }
     ],
     khet: {
-      say: 'Chabi dhundhne ka order kya tha? Tap karo!',
-      win: 'Aap toh asli detective ho!',
+      say: 'चाबी ढूँढने का क्रम क्या था? क्रम से छुओ!',
+      win: 'आप तो असली जासूस हो!',
       items: [
-        { e: '🗝️', l: 'Chabi gayi' },
-        { e: '👂', l: 'Ching suno' },
-        { e: '🐱', l: 'Mittu peeth raha' },
-        { e: '📦', l: 'Box khola' }
+        { e: '🗝️', l: 'चाबी गुम हुई' },
+        { e: '👂', l: 'आवाज़ सुनी' },
+        { e: '🐱', l: 'मिट्टू दिखी' },
+        { e: '📦', l: 'डिब्बा खोला' }
       ]
     }
   },
   {
-    id: 's5', zone: 'craft', title: 'Dadi Ke Liye Tohfa', emoji: '✂️',
+    id: 's5', zone: 'craft', title: 'दादी के लिए तोहफ़ा', emoji: '✂️',
     bg: 'linear-gradient(135deg,#ffd6e0,#ffe9c9)',
     pages: [
-      { char1: 'dadi', char2: 'laddu', e1: '📅', e2: '👵', deco: ['🎂', '💭'], text: 'Agle hafte Dadi ka birthday! Laddu soch rahi hai — kya tohfa du? Dukaan se nahi... koi naya cheez banaungi, apne haathon se! Kya cheez? Hmm...' },
-      { char1: 'laddu', e1: '📰', e2: '🧵', deco: ['🧴', '⭐'], text: 'Laddu purani newspaper, purane kagaz, glue, aur rangin kagaz ikatha karti hai. "Kachra nahi! Ye sab meri tohfe ki taqat hai!" — isko kehte hain recycle.' },
-      { char1: 'laddu', char2: 'chiku', e1: '✂️', e2: '🌸', deco: ['🟡', '🌼'], text: 'Chal! Kaato! Laddu newspaper se phool kaati hai — petals gule, center peela. Kape se ek "Dadi ka muh" bhi kaata — gulla, muskaan ke saath. (Chiku ke chehre se copy kiya, Dadi ke jaisa nahi hai!)' },
-      { char1: 'laddu', e1: '🖍️', e2: '🎨', deco: ['🌟', '⭐'], text: 'Ab rang aur chitkara! Laddu phoolon ko kagaz par chipkati hai, upar "HAPPY BIRTHDAY DADI" likhti hai, aur har phool par ek chhota sa star lagati hai.' },
-      { char1: 'laddu', char2: 'dadi', e1: '🎁', e2: '👵', deco: ['🥹', '💖'], text: 'Birthday din! Laddu tohfa Dadi ko deti hai. Dadi use uthati hain, dekh rahi hain... aur aankhein nam ho jaati hain — "Ye maine dukaan se nahi khareedi, ye toh dil se banaya hai."' },
-      { char1: 'dadi', char2: 'laddu', e1: '🌟', e2: '♻️', deco: ['✨', '🌈'], text: 'Laddu ko samajh aata hai — sabse bada tohfa hai pyaar, aur chhote se cheezein bhi badi baat ban jaati hain. Purani cheez se nayi cheez banana — isko kehte hain "recycle + jaadu".' }
+      { char1: 'dadi', char2: 'laddu', e1: '📅', e2: '👵', deco: ['🎂', '💭'], text: 'अगले हफ़्ते दादी का जन्मदिन है! लड़्डू सोच में पड़ गई — क्या तोहफ़ा दूँ? दुकान से नहीं ख़रीदूँगी... अपने हाथों से कुछ ख़ास बनाऊँगी!' },
+      { char1: 'laddu', e1: '📰', e2: '🧵', deco: ['🧴', '⭐'], text: 'लड़्डू ने पुराने अख़बार, रंगीन काग़ज़, गोंद और धागा इकट्ठा किया। वह बोली — "यह कचरा नहीं है! यही मेरे तोहफ़े की ताक़त है!" इसे कहते हैं — पुरानी चीज़ से नई चीज़ बनाना।' },
+      { char1: 'laddu', char2: 'chiku', e1: '✂️', e2: '🌸', deco: ['🟡', '🌼'], text: 'काटने का काम शुरू हुआ! लड़्डू ने अख़बार से फूल काटे — गुलाबी पंखुड़ियाँ और पीला बीच। चीकू ने मदद की और दोनों ने मिलकर एक बड़ा-सा फूलों का गुलदस्ता तैयार किया।' },
+      { char1: 'laddu', e1: '🖍️', e2: '🎨', deco: ['🌟', '⭐'], text: 'अब रंग और सजावट की बारी! लड़्डू ने फूलों को कार्ड पर चिपकाया, ऊपर बड़े अक्षरों में लिखा — "जन्मदिन मुबारक दादी" — और हर फूल पर एक छोटा-सा सितारा लगा दिया।' },
+      { char1: 'laddu', char2: 'dadi', e1: '🎁', e2: '👵', deco: ['🥹', '💖'], text: 'जन्मदिन के दिन लड़्डू ने तोहफ़ा दादी को दिया। दादी ने कार्ड खोला, देखा... और उनकी आँखें भर आईं — "यह तोहफ़ा तुमने अपने हाथों से बनाया है, इसलिए यह सबसे कीमती है।"' },
+      { char1: 'dadi', char2: 'laddu', e1: '🌟', e2: '♻️', deco: ['✨', '🌈'], text: 'लड़्डू समझ गई — सबसे बड़ा तोहफ़ा प्यार होता है। और पुरानी चीज़ों से नई सुंदर चीज़ बनाना — यह है रीसायकल का जादू!' }
     ],
     khet: {
-      say: 'Tohfa banane ke steps kaunse the? Tap karo!',
-      win: 'Aap bhi tohfe bana sakte ho!',
+      say: 'तोहफ़ा बनाने के काम किस क्रम में हुए? क्रम से छुओ!',
+      win: 'आप भी हाथ के तोहफ़े बना सकते हो!',
       items: [
-        { e: '📅', l: 'Birthday' },
-        { e: '📰', l: 'Kagaz uthao' },
-        { e: '✂️', l: 'Kaato' },
-        { e: '🎁', l: 'Tohfa do' }
+        { e: '📅', l: 'जन्मदिन आया' },
+        { e: '📰', l: 'काग़ज़ जमा किया' },
+        { e: '✂️', l: 'फूल काटे' },
+        { e: '🎁', l: 'तोहफ़ा दिया' }
       ]
     }
   },
   {
-    id: 's6', zone: 'music', title: 'Happy Birthday Ka Jaadu', emoji: '🎵',
+    id: 's6', zone: 'music', title: 'जन्मदिन का जादू', emoji: '🎵',
     bg: 'linear-gradient(135deg,#ffe9a8,#ffc9de)',
     pages: [
-      { char1: 'dadi', char2: 'amma', e1: '🥘', e2: '👵', deco: ['🎶', '⭐'], text: 'Dadi ka birthday parivaar mein sabse bada din hai! Amma bolte hain — "Aaj hum sab saath mein gaayenge Happy Birthday!" Laddu tayaar hai — uska haath jhaank raha hai.' },
-      { char1: 'laddu', char2: 'chiku', e1: '🎵', e2: '👦', deco: ['🥁', '😆'], text: 'Pehle practice! Laddu aur Chiku mitti ke bartan par haath maarte hain — "Dha... dha... dhin... dha!" — "Happy birthday to you..." — galat, par bahut funny! Dono has rahe hain.' },
-      { char1: 'papa', char2: 'dadi', e1: '📣', e2: '👨‍👩‍👧‍👦', deco: ['🎤', '🥳'], text: 'Ab poora parivaar! Papa gaane ke saath saath hain, Dadi beat karti hain, Amma lyrics yaad dilati hain. Ek, do, teen — "Happy... BIRTHDAY... to DADI!" — sab chilla kar gaate hain!' },
-      { char1: 'laddu', char2: 'dadi', e1: '💃', e2: '🕺', deco: ['🎶', '✨'], text: 'Ab naach ka waqt! Laddu kehti hai — "Round mein baithiye! Music jaise hi chalega, sab saath mein nachenge!" Ek-dhamaka — sab hilne lagte hain. Dadi bhi uth gayi hain!' },
-      { char1: 'chiku', char2: 'dadi', e1: '🎂', e2: '🕯️', deco: ['🎈', '💛'], text: 'Cake aaya! 20 candles — Dadi ke 20 pyaare yaadein. Sab neer banaye, Happy Birthday gaate hue, Dadi aankhein band karke wish karti hain. Chiku bhi wish kar raha hai — 3 icecream!' },
-      { char1: 'laddu', char2: 'chiku', e1: '💛', e2: '🎶', deco: ['⭐', '🤗'], text: 'Raat ko Laddu Chiku se kehti hai — "Kya pata hai music ka jaadu kya hai?" Chiku sochta hai — "Cake zyada sweet ho jaata hai?" Laddu hasti hai — "Nahi! Music humein saath jorda deta hai — har awaaz, har haath, ek hi dhun mein!"' }
+      { char1: 'dadi', char2: 'amma', e1: '🥘', e2: '👵', deco: ['🎶', '⭐'], text: 'दादी का जन्मदिन पूरे परिवार के लिए सबसे बड़ा दिन होता है! अम्मा बोलीं — "आज हम सब मिलकर दादी के लिए हैप्पी बर्थडे गाएँगे!" लड़्डू तैयार हो गई।' },
+      { char1: 'laddu', char2: 'chiku', e1: '🎵', e2: '👦', deco: ['🥁', '😆'], text: 'पहले अभ्यास हुआ! लड़्डू और चीकू बर्तनों पर हाथ मारकर ताल देने लगे — "धा... धा... धिन... धा!" गाना थोड़ा ग़लत हुआ, पर दोनों हँसते-हँसते लोटपोट हो गए।' },
+      { char1: 'papa', char2: 'dadi', e1: '📣', e2: '👨‍👩‍👧‍👦', deco: ['🎤', '🥳'], text: 'अब पूरा परिवार साथ आया! पापा गाने लगे, दादी ताल देने लगीं और अम्मा सबको बोल याद दिलाती रहीं। एक, दो, तीन — "हैप्पी बर्थडे टू दादी!" सबने मिलकर गाया!' },
+      { char1: 'laddu', char2: 'dadi', e1: '💃', e2: '🕺', deco: ['🎶', '✨'], text: 'अब नाच का समय! लड़्डू बोली — "सब गोले में खड़े हो जाओ! जैसे ही गाना बजेगा, सब साथ नाचेंगे!" गाना बजा और पूरा परिवार झूम उठा। दादी भी नाचने लगीं!' },
+      { char1: 'chiku', char2: 'dadi', e1: '🎂', e2: '🕯️', deco: ['🎈', '💛'], text: 'फिर केक आया! दादी ने आँखें बंद करके मन में एक इच्छा माँगी और मोमबत्तियाँ बुझा दीं। सबने तालियाँ बजाईं। चीकू ने भी एक इच्छा माँगी — तीन आइसक्रीम!' },
+      { char1: 'laddu', char2: 'chiku', e1: '💛', e2: '🎶', deco: ['⭐', '🤗'], text: 'रात को लड़्डू ने चीकू से पूछा — "जानते हो, संगीत का जादू क्या है?" चीकू बोला — "केक ज़्यादा मीठा हो जाता है?" लड़्डू हँसी — "नहीं! संगीत हमें एक धुन में जोड़ देता है!"' }
     ],
     khet: {
-      say: 'Birthday celebration ke steps kaunse the? Tap karo!',
-      win: 'Aap ne music ka jaadu samajh liya!',
+      say: 'जन्मदिन की धूम किस क्रम में हुई? क्रम से छुओ!',
+      win: 'आपने संगीत का जादू समझ लिया!',
       items: [
-        { e: '🥘', l: 'Dhamaka banao' },
-        { e: '🎵', l: 'Practice karo' },
-        { e: '💃', l: 'Round mein nacho' },
-        { e: '🎂', l: 'Cake khao' }
+        { e: '🎤', l: 'गाना गाया' },
+        { e: '🎵', l: 'अभ्यास किया' },
+        { e: '💃', l: 'साथ नाचे' },
+        { e: '🎂', l: 'केक काटा' }
       ]
     }
   }
