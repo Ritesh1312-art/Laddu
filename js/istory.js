@@ -76,7 +76,11 @@
       scene.style.background = 'linear-gradient(135deg,#d9f99d,#a7f3d0)';
       scene.innerHTML = '<span class="sc-e1" style="font-size:64px">' + seg.e + '</span>';
       book.append(scene);
-      book.append(el('div', 'page-text', seg.text));
+      const segTxt = el('div', 'page-text', seg.text);
+      segTxt.style.cursor = 'pointer';
+      segTxt.title = 'सुनने के लिए छुओ';
+      segTxt.onclick = () => Player.play(seg);
+      book.append(segTxt);
       const ctl = el('div', 'page-ctl');
       const listenB = el('button', 'btn btn-primary', '🔊 सुनो');
       listenB.onclick = () => { SFX.pop(); Player.play(segId, seg.text); };

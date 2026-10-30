@@ -342,6 +342,9 @@
         s.innerHTML = '<div style="display:flex;justify-content:center">' + Characters.getAvatarHTML('dadi', 76, '') + '</div>' +
           '<div class="ln-emo">' + m.e + '</div>' +
           '<div class="ln-ask" style="margin-top:6px">' + m.q + '</div>';
+        s.style.cursor = 'pointer';
+        s.title = 'प्रश्न फिर सुनने के लिए छुओ';
+        s.onclick = () => Speech.say(m.q);
         Speech.say(m.q);
         const opts = el('div', 'ln-opts');
         m.opts.forEach((t, i) => {

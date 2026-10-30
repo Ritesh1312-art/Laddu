@@ -99,6 +99,9 @@
     book.append(scene);
 
     const txt = el('div', 'page-text', p.text);
+    txt.style.cursor = 'pointer';
+    txt.title = 'सुनने के लिए छुओ';
+    txt.onclick = () => { SFX.pop(); Narrator.play(st.id, page, p.text, listenB); };
     book.append(txt);
 
     const ctl = el('div', 'page-ctl');

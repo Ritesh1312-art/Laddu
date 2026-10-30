@@ -54,6 +54,9 @@
     { id: 'k4', emoji: '🪁', name: 'पतंग बाज़',       skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
     { id: 'k5', emoji: '🍭', name: 'मीठा दिन',       skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
     { id: 'k6', emoji: '🦋', name: 'तितली दोस्त',    skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
+    { id: 'kavita', emoji: '🎶', name: 'कविता प्रेमी',    skill: 'पाँच कविताएँ सुनना', zone: 'कविता वाड़ी' },
+    { id: 'suno',   emoji: '🎧', name: 'सुनने के उस्ताद', skill: 'सिर्फ़ सुनकर पहचानना', zone: 'पढ़ाई वाड़ी' },
+    { id: 'bolo',   emoji: '🗣️', name: 'बोलने के हीरो',   skill: 'सुनकर खुद बोलना और दोहराना', zone: 'पढ़ाई वाड़ी' },
     { id: 'guru',  emoji: '📚', name: 'कहानी गुरु',       skill: 'सारी 6 कहानियाँ (ख़ास!)', zone: 'कहानी वाड़ी' }
   ];
 
@@ -68,6 +71,7 @@
     nav(name, arg) {
       Speech.stop();
       if (window.StoryNarrator) window.StoryNarrator.stop();
+      if (window.PoemPlayer) window.PoemPlayer.stop();
       if (window.SFX) SFX.stopBeat();
       this.lastNav = { name: name, arg: arg == null ? null : arg };
       this.screen.innerHTML = '';
