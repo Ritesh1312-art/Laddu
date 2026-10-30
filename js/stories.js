@@ -6,6 +6,53 @@
 (function () {
   let cur = null;
 
+  /* ---- असली आवाज़ (2026-10-30): कहानियों की narration पहले से
+     बनी हुई असली आवाज़ (MAI_01) में चलती है — device की robot
+     आवाज़ सिर्फ़ तब, जब clip न मिले। Clips js/audio/<id>.js में
+     lazy-load होते हैं (bundle में पहले से भरे होते हैं)। ---- */
+  const Narrator = {
+    audio: null, key: null, btn: null,
+    stop() {
+      if (this.audio) { try { this.audio.pause(); } catch (e) {} this.audio = null; }
+      this.key = null;
+      if (this.btn) { try { this.btn.textContent = '🔊 सुनो'; } catch (e) {} this.btn = null; }
+    },
+    play(sid, idx, fallbackText, btn) {
+      const key = sid + ':' + idx;
+      if (this.key === key && this.audio) { this.stop(); return; }
+      this.stop();
+      if (window.Speech) Speech.stop();
+      this.key = key; this.btn = btn || null;
+      if (this.btn) this.btn.textContent = '⏹️ रोको';
+      const self = this;
+      const finish = () => { if (self.key === key) self.stop(); };
+      const fallback = () => { self.audio = null; if (self.key === key) { Speech.say(fallbackText); finish(); } };
+      const useClip = () => {
+        const clips = window.STORY_AUDIO && window.STORY_AUDIO[sid];
+        if (!clips || !clips[idx]) return false;
+        try {
+          const a = new Audio(clips[idx]);
+          self.audio = a;
+          a.onended = finish;
+          a.onerror = fallback;
+          const pr = a.play();
+          if (pr && pr.catch) pr.catch(fallback);
+          return true;
+        } catch (e) { return false; }
+      };
+      if (window.STORY_AUDIO && window.STORY_AUDIO[sid]) {
+        if (!useClip()) fallback();
+      } else {
+        const sc = document.createElement('script');
+        sc.src = 'js/audio/' + sid + '.js';
+        sc.onload = () => { if (self.key === key && !useClip()) fallback(); };
+        sc.onerror = () => { if (self.key === key) fallback(); };
+        document.head.appendChild(sc);
+      }
+    }
+  };
+  window.StoryNarrator = Narrator;
+
   App.screens.story = function (stage, id) {
     const st = STORIES.find(s => s.id === id);
     if (!st) { App.nav('home'); return; }
@@ -56,20 +103,20 @@
 
     const ctl = el('div', 'page-ctl');
     const prevB = el('button', 'btn', '← पिछला');
-    prevB.onclick = () => { if (page > 0) { cur.page--; SFX.pop(); render(stage); } };
+    prevB.onclick = () => { if (page > 0) { Narrator.stop(); cur.page--; SFX.pop(); render(stage); } };
     if (page === 0) prevB.disabled = true;
     const listenB = el('button', 'btn btn-primary', '🔊 सुनो');
     listenB.onclick = function () {
       SFX.pop();
-      Speech.say(p.text);
+      Narrator.play(st.id, page, p.text, listenB);
     };
     let nextB;
     if (isLast) {
       nextB = el('button', 'btn btn-primary', '🎮 कहानी खेल');
-      nextB.onclick = () => { SFX.ding(); khet(stage); };
+      nextB.onclick = () => { Narrator.stop(); SFX.ding(); khet(stage); };
     } else {
       nextB = el('button', 'btn btn-primary', 'अगला →');
-      nextB.onclick = () => { cur.page++; SFX.pop(); render(stage); };
+      nextB.onclick = () => { Narrator.stop(); cur.page++; SFX.pop(); render(stage); };
     }
     ctl.append(prevB, listenB, nextB);
     book.append(ctl);

@@ -178,8 +178,11 @@
         SFX.tap();
         stroke(last, { x: last.x + 0.1, y: last.y + 0.1 });
       });
+      /* ऊपर-नीचे खींचने पर page refresh/pull न हो — canvas पर touch रोको */
+      cv.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
       cv.addEventListener('pointermove', function (e) {
         if (!drawing) return;
+        e.preventDefault();
         const p = pt(e);
         stroke(last, p);
         last = p;

@@ -9,7 +9,7 @@
   --violet:#7048e8;
 }
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html,body{ margin:0; padding:0; }
+html,body{ margin:0; padding:0; overscroll-behavior:none; }
 body{
   font-family:'Baloo 2','Mukta','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
   color:var(--ink);

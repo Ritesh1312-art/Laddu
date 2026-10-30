@@ -57,6 +57,7 @@
 
     nav(name, arg) {
       Speech.stop();
+      if (window.StoryNarrator) window.StoryNarrator.stop();
       if (window.SFX) SFX.stopBeat();
       this.lastNav = { name: name, arg: arg == null ? null : arg };
       this.screen.innerHTML = '';
