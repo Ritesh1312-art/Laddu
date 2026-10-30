@@ -42,8 +42,11 @@
         order.forEach((tile, pos) => {
           const r = Math.floor(tile / 3), c = tile % 3;
           const d = el('button');
+          /* tukda = <img> sprite (background-image ki jagah — data-URI
+             wali file me bhi har jagah pakka chalta hai) */
           d.style.cssText = 'aspect-ratio:1;border-radius:10px;border:' + (sel === pos ? '4px solid #ff7b54' : '2px solid #fff') +
-            ';background-image:url(' + m.img + ');background-size:300% 300%;background-position:' + (c * 50) + '% ' + (r * 50) + '%;cursor:pointer;padding:0';
+            ';position:relative;overflow:hidden;cursor:pointer;padding:0;background:#fff';
+          d.innerHTML = '<img src="' + m.img + '" alt="" draggable="false" style="position:absolute;width:300%;height:300%;max-width:none;left:-' + (c * 100) + '%;top:-' + (r * 100) + '%;pointer-events:none" data-tile="' + tile + '">';
           d.setAttribute('aria-label', 'tukda ' + (pos + 1));
           d.onclick = () => {
             if (done) return;
