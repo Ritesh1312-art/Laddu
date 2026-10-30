@@ -8,7 +8,8 @@
     { id: 'cartoon', emoji: '📺', name: 'कार्टून दुनिया', sub: 'रंग, आकार, गिनती', bg: 'linear-gradient(135deg,#11998e,#38ef7d)', tag: 'रंग • गिनती' },
     { id: 'mystery', emoji: '🕵️', name: 'रहस्य', sub: 'सुराग और सोच', bg: 'linear-gradient(135deg,#2c3e50,#4ca1af)', tag: 'तर्क • सोच' },
     { id: 'craft',   emoji: '🎨', name: 'चित्रकारा और कला', sub: 'बनाओ, रंग दो', bg: 'linear-gradient(135deg,#ee5396,#f6d365)', tag: 'सृजन • हाथ' },
-    { id: 'music',   emoji: '🎵', name: 'संगीत और नृत्य', sub: 'गाना और नाच', bg: 'linear-gradient(135deg,#f7971e,#ffd200)', tag: 'ताल • याद' }
+    { id: 'music',   emoji: '🎵', name: 'संगीत और नृत्य', sub: 'गाना और नाच', bg: 'linear-gradient(135deg,#f7971e,#ffd200)', tag: 'ताल • याद' },
+    { id: 'school',  emoji: '🎒', name: 'पढ़ाई वाड़ी', sub: 'ABC • वर्णमाला • गिनती • संस्कार', bg: 'linear-gradient(135deg,#43cea2,#185a9d)', tag: 'अक्षर • अंक • आदतें' }
   ];
 
   function zoneDone(zid) {
