@@ -44,6 +44,16 @@
     { id: 'varn',    emoji: '✍️', name: 'अक्षर उस्ताद',     skill: 'स्वर और व्यंजन पहचानना', zone: 'पढ़ाई वाड़ी' },
     { id: 'ginti',   emoji: '🔢', name: 'गिनती बादशाह',    skill: 'छूकर गिनना, 1 से 20 तक', zone: 'पढ़ाई वाड़ी' },
     { id: 'manners', emoji: '🙏', name: 'संस्कार सितारा',   skill: 'अच्छी आदतें और शिष्टाचार', zone: 'पढ़ाई वाड़ी' },
+    { id: 'istory',  emoji: '🪄', name: 'जादुई कहानी मास्टर', skill: 'खुद रास्ता चुनकर कहानी बनाना', zone: 'कहानी वाड़ी' },
+    { id: 'puzzle',  emoji: '🧩', name: 'पहेली प्रो',        skill: 'tukde जोड़कर पूरी तस्वीर', zone: 'परिवार और व्लॉग' },
+    { id: 'dhundho', emoji: '🫣', name: 'तेज़ नज़र',         skill: 'थोड़े में पहचानना', zone: 'परिवार और व्लॉग' },
+    { id: 'kamra',   emoji: '👑', name: 'कमरा सजावट राजा',   skill: 'सारे सितारे इकट्ठे करके कमरा सजाना', zone: 'मस्ती वाड़ी' },
+    { id: 'k1', emoji: '🎁', name: 'खज़ाना सितारा',  skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
+    { id: 'k2', emoji: '🦄', name: 'जादुई दोस्त',    skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
+    { id: 'k3', emoji: '🌈', name: 'इंद्रधनुष',      skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
+    { id: 'k4', emoji: '🪁', name: 'पतंग बाज़',       skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
+    { id: 'k5', emoji: '🍭', name: 'मीठा दिन',       skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
+    { id: 'k6', emoji: '🦋', name: 'तितली दोस्त',    skill: 'रोज़ का surprise', zone: 'मस्ती वाड़ी' },
     { id: 'guru',  emoji: '📚', name: 'कहानी गुरु',       skill: 'सारी 6 कहानियाँ (ख़ास!)', zone: 'कहानी वाड़ी' }
   ];
 

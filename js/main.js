@@ -32,8 +32,24 @@
     hello.innerHTML =
       '<div class="hello-photo">' + Characters.getAvatarHTML('laddu', 92, 'hello-avatar') + '</div>' +
       '<h1>नमस्ते <span>लड़्डू</span>!</h1>' +
-      '<p>आज क्या खेलेंगे? हर खेल में आवाज़, हँसी और नई सीख! 🎈</p>';
+      '<p>आज क्या खेलेंगे? हर खेल में आवाज़, हँसी और नई सीख! 🎈</p>' +
+      '<p style="font-size:13px;color:#8e44ad;margin:2px">👆 लड़्डू की फोटो छूओ — वो बात करेगी!</p>';
+    const bubble = el('div', 'ln-progress');
+    bubble.style.display = 'none';
+    hello.append(bubble);
+    const photoEl = hello.querySelector('.hello-photo');
+    if (photoEl) {
+      photoEl.style.cursor = 'pointer';
+      photoEl.onclick = () => { SFX.ding(); if (window.BuddyTalk) BuddyTalk(bubble); };
+    }
     stage.append(hello);
+
+    if (window.KhazanaMount) {
+      const kz = el('div');
+      kz.style.margin = '10px 0';
+      stage.append(kz);
+      KhazanaMount(kz);
+    }
 
     const grid = el('div', 'zone-grid');
     ZONES.forEach((z, i) => {
@@ -54,6 +70,11 @@
 
     const extra = el('div', 'extra-row');
     const got = Object.keys(State.data.stickers).length;
+    const is = el('button', 'btn card-mini', '🪄 जादुई कहानी <span>खुद रास्ता चुनो!</span>');
+    is.onclick = () => { SFX.pop(); App.nav('istory'); };
+    const km = el('button', 'btn card-mini', '🏠 लड़्डू का कमरा <span>सितारों से सजावट</span>');
+    km.onclick = () => { SFX.pop(); App.nav('kamra'); };
+    extra.append(is, km);
     const f = el('button', 'btn card-mini', '👨‍👩‍👧‍👦 मेरा परिवार <span>असली फोटो</span>');
     f.onclick = () => { SFX.pop(); App.nav('family'); };
     const an = el('button', 'btn card-mini', '🐾 जानवर सफ़ारी <span>10 जानवर और बोलियाँ</span>');
